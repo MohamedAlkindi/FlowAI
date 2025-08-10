@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/accessibility_utils.dart';
 import '../l10n/l10n.dart';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,16 +16,31 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isAccessibilityEnabled = false;
   final _promptController = TextEditingController();
   String? _functionResult;
+  String? _oemBrand;
 
   @override
   void initState() {
     super.initState();
     _refreshStatus();
+    _loadOemBrand();
   }
 
   Future<void> _refreshStatus() async {
     final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();
     setState(() => _isAccessibilityEnabled = enabled);
+  }
+
+  Future<void> _loadOemBrand() async {
+    try {
+      if (Platform.isAndroid) {
+        final info = await DeviceInfoPlugin().androidInfo;
+        final manufacturer = (info.manufacturer).toLowerCase();
+        final brand = (info.brand).toLowerCase();
+        setState(() {
+          _oemBrand = manufacturer.isNotEmpty ? manufacturer : brand;
+        });
+      }
+    } catch (_) {}
   }
 
   @override
@@ -67,6 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
             const SizedBox(height: 24),
             _buildInstructionsCard(t),
+            const SizedBox(height: 24),
+            _buildOemInstructionsCard(t),
+            const SizedBox(height: 24),
+            _buildTroubleshootingCard(t),
           ],
         ),
       ),
@@ -118,6 +139,161 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             textAlign: TextAlign.center,
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOemInstructionsCard(AppLocalizations t) {
+    final isXiaomi = (_oemBrand ?? '').contains('xiaomi') ||
+        (_oemBrand ?? '').contains('redmi') ||
+        (_oemBrand ?? '').contains('mi');
+    final isSamsung = (_oemBrand ?? '').contains('samsung');
+
+    final showAll = _oemBrand == null || (!isXiaomi && !isSamsung);
+
+    final List<Widget> sections = [];
+
+    if (showAll || isXiaomi) {
+      sections.addAll([
+        Row(
+          children: [
+            const Icon(Icons.phone_android, color: Color(0xFFE94560), size: 28),
+            const SizedBox(width: 8),
+            Text(
+              t.t('xiaomi_heading'),
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        _buildInstructionStep(
+            t.t('1'), t.t('xiaomi_step_1_t'), t.t('xiaomi_step_1_d')),
+        _buildInstructionStep(
+            t.t('2'), t.t('xiaomi_step_2_t'), t.t('xiaomi_step_2_d')),
+        _buildInstructionStep(
+            t.t('3'), t.t('xiaomi_step_3_t'), t.t('xiaomi_step_3_d')),
+        const SizedBox(height: 16),
+      ]);
+    }
+
+    if (showAll || isSamsung) {
+      sections.addAll([
+        Row(
+          children: [
+            const Icon(Icons.phone_iphone, color: Color(0xFFE94560), size: 28),
+            const SizedBox(width: 8),
+            Text(
+              t.t('samsung_heading'),
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        _buildInstructionStep(
+            t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
+        _buildInstructionStep(
+            t.t('2'), t.t('samsung_step_2_t'), t.t('samsung_step_2_d')),
+        _buildInstructionStep(
+            t.t('3'), t.t('samsung_step_3_t'), t.t('samsung_step_3_d')),
+      ]);
+    }
+
+    if (sections.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF16213E),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.warning_amber_outlined,
+                  color: Color(0xFFE94560), size: 48),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  t.t('oem_card_title'),
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ...sections,
+          if (showAll) ...[
+            const SizedBox(height: 8),
+            Text(
+              t.t('oem_unknown_hint'),
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                color: Colors.grey[400],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTroubleshootingCard(AppLocalizations t) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF16213E),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.build_outlined,
+                  color: Color(0xFFE94560), size: 48),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  t.t('troubleshooting_title'),
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildInstructionStep(
+              t.t('1'), t.t('ts_issue_1_t'), t.t('ts_issue_1_d')),
+          _buildInstructionStep(
+              t.t('2'), t.t('ts_issue_2_t'), t.t('ts_issue_2_d')),
+          _buildInstructionStep(
+              t.t('3'), t.t('ts_issue_3_t'), t.t('ts_issue_3_d')),
+          _buildInstructionStep(
+              t.t('4'), t.t('ts_issue_4_t'), t.t('ts_issue_4_d')),
+          _buildInstructionStep(
+              t.t('5'), t.t('ts_issue_5_t'), t.t('ts_issue_5_d')),
         ],
       ),
     );
