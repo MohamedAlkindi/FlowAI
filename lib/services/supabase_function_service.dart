@@ -1,17 +1,35 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as dev;
 
 class SupabaseFunctionService {
+  static Future<void> _assertOnline() async {
+    try {
+      final result = await InternetAddress.lookup('example.com')
+          .timeout(const Duration(seconds: 3));
+      if (result.isEmpty || result.first.rawAddress.isEmpty) {
+        throw const SocketException('DNS lookup failed');
+      }
+    } on SocketException {
+      throw Exception('No internet connection');
+    } on TimeoutException {
+      throw Exception('No internet connection');
+    }
+  }
+
   static Future<String> invokeGenerate(
       {required String prompt, required String deviceId}) async {
     final client = Supabase.instance.client;
     try {
+      await _assertOnline();
       final response = await client.functions.invoke(
         'gemini',
         body: {
           'prompt': prompt,
           'deviceId': deviceId,
+          'stream': false,
         },
       );
 
@@ -103,6 +121,10 @@ class SupabaseFunctionService {
       }
     } on FunctionException catch (e) {
       throw Exception('Function error: ${e.toString()}');
+    } on SocketException {
+      throw Exception('No internet connection');
+    } on TimeoutException {
+      throw Exception('No internet connection');
     } catch (e) {
       rethrow;
     }

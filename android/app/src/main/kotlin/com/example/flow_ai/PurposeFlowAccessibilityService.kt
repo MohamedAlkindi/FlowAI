@@ -128,6 +128,18 @@ class PurposeFlowAccessibilityService : AccessibilityService() {
     private suspend fun invokeSupabaseFunction(prompt: String, onDelta: suspend (String) -> Unit) = withContext(Dispatchers.IO) {
         val supabaseUrl = BuildConfig.SUPABASE_URL
         val anonKey = BuildConfig.SUPABASE_ANON_KEY
+        // Connectivity pre-check
+        try {
+            val pingUrl = URL(supabaseUrl)
+            val pingConn = (pingUrl.openConnection() as HttpURLConnection).apply {
+                requestMethod = "HEAD"
+                connectTimeout = 3000
+                readTimeout = 3000
+            }
+            pingConn.connect()
+        } catch (e: Exception) {
+            throw RuntimeException("No internet connection")
+        }
         val url = URL("$supabaseUrl/functions/v1/gemini")
         val connection = (url.openConnection() as HttpURLConnection).apply {
             requestMethod = "POST"
