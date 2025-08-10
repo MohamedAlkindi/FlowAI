@@ -185,7 +185,7 @@ FlowAI does not store or share your text data. It only activates when /ai is typ
 ## 📥 Download
 
 You can download the latest release of FlowAI from the GitHub releases page:
-Download FlowAI
+[Download FlowAI](https://github.com/MohamedAlkindi/flow_ai/releases)
 
 
 ---
@@ -193,7 +193,8 @@ Download FlowAI
 ## 🚀 Getting Started
 
 The easiest way:
-Download the app directly from the Releases page and install it on your device.
+Download the app directly from the [Release Page](https://github.com/MohamedAlkindi/flow_ai/releases)
+ and install it on your device.
 
 Or from source:
 
