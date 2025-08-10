@@ -1,0 +1,61 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.flow_ai"
+    compileSdk = 34
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.flow_ai"
+        minSdk = 21
+        targetSdk = 34
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+
+        // Inject Supabase URL and anon key from local.properties into BuildConfig
+        def props = new Properties()
+        def propsFile = rootProject.file("local.properties")
+        if (propsFile.exists()) {
+            props.load(new FileInputStream(propsFile))
+        }
+        def supabaseUrl = props.getProperty("SUPABASE_URL", "YOUR_SUPABASE_URL")
+        def supabaseAnon = props.getProperty("SUPABASE_ANON_KEY", "YOUR_SUPABASE_ANON_KEY")
+        buildConfigField "String", "SUPABASE_URL", '"' + supabaseUrl + '"'
+        buildConfigField "String", "SUPABASE_ANON_KEY", '"' + supabaseAnon + '"'
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+        debug {
+            resValue "string", "app_name", "FlowAI"
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+}
+
+flutter {
+    source = "../.."
+}

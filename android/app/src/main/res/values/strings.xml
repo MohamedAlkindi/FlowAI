@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">FlowAI accessibility service monitors text input fields to detect /ai commands and provide AI-powered text generation.</string>
+</resources> 
