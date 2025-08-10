@@ -1,7 +1,7 @@
 name: Build Flutter APK
 
 on:
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   build:
@@ -15,6 +15,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.4'
+
+      - name: Configure Gradle properties
+        run: |
+          echo "kotlin.build.script.compile.avoidance=false" >> android/gradle.properties
 
       - name: Install dependencies
         run: flutter pub get
