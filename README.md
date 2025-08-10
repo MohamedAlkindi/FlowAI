@@ -116,6 +116,26 @@ bakirmohamedsami@gmail.com
 
 ---
 
+[![الرخصة: AGPL v3](https://img.shields.io/badge/الرخصة-AGPL%20v3-1f8f4c.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+## 📜 الرخصة
+
+هذا المشروع مرخص بموجب **رخصة GNU AGPL الإصدار 3.0**.
+
+يمكنك استخدام الكود وتعديله ومشاركته **طالما**:
+- أي تعديلات تقوم بها يجب أن تكون مفتوحة المصدر بنفس الرخصة.
+- إذا قمت بتشغيل البرنامج كخدمة (مثلاً على سيرفر)، يجب أن توفر شفرة المصدر للتعديلات التي أجريتها بشكل عام.
+
+هذا يضمن بقاء FlowAI مجانيًا ومفتوحًا للمجتمع، ويمنع النسخ المغلقة أو الاستغلال التجاري دون المشاركة.
+
+📄 النص الكامل للرخصة متوفر في ملف [LICENSE](./LICENSE).
+
+### ❓ لماذا رخصة AGPL؟
+رخصة AGPL تحمي الكود وحالة تشغيله كخدمة على الإنترنت.  
+على عكس الرخص المرنة مثل MIT أو Apache، تضمن AGPL أنه إذا قام أحدهم بتطوير FlowAI أو تشغيله كخدمة، فإنه يجب عليه مشاركة التعديلات على شفرة المصدر.  
+بهذا الشكل، يحافظ المشروع على الإنصاف والانفتاح، ويمنع استغلال الشركات الكبيرة أو المشاريع المغلقة للكود دون رد الجميل للمجتمع.
+
+---
 ## ❤️ شكرًا لدعمك! استمتع بالكتابة السلسة مع FlowAI.
 
 
@@ -246,6 +266,27 @@ Contributions and suggestions are welcome!
 To contribute or collaborate, feel free to reach out at:
 bakirmohamedsami@gmail.com
 
+
+---
+
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+## 📜 License
+
+This project is licensed under the **GNU AGPL v3.0** License.
+
+You are free to use, modify, and share the code **as long as**:
+- Any modifications you make are also open-sourced under the same license.
+- If you run this software as a service (e.g., on a server), you must make the source code of your modified version publicly available.
+
+This ensures FlowAI stays free and open for the community while preventing closed-source clones.
+
+📄 Full license text is available in the [LICENSE](./LICENSE) file.
+
+### ❓ Why AGPL?
+AGPL protects both the code and the **software-as-a-service** use case.  
+Unlike permissive licenses (MIT, Apache), AGPL ensures that if someone builds on FlowAI — even if they host it online — they must also share their source code changes.  
+This keeps the project fair, open, and beneficial for everyone, without letting big companies or closed-source projects take it without giving back.
 
 ---
 
