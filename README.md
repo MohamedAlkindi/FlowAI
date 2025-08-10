@@ -1,97 +1,251 @@
-## FlowAI
+<!-- Language Tabs -->
+<p align="center">
+  <a href="#arabic"><img src="https://img.shields.io/badge/العربية-🇦🇪-green?style=for-the-badge" alt="Arabic"></a>
+  <a href="#english"><img src="https://img.shields.io/badge/English-🇺🇸-blue?style=for-the-badge" alt="English"></a>
+</p>
+
+---
+<!-- Arabic Section -->
+
+<h2 id="arabic">🇦🇪 العربية</h2>
 
 <details>
-<summary><strong>English</strong></summary>
 
-### What is FlowAI?
-FlowAI makes AI text generation available in any Android text field. Type `/ai` then your prompt and FlowAI will replace your text in-place with AI-generated content.
+<summary>عرض العربية</summary>
 
-### Why this project? (Problem → Solution)
-- Problem: Switching apps and copy/pasting to use AI breaks your flow.
-- Solution: A lightweight Accessibility Service that listens for a trigger (`/ai`) and streams AI output directly back into the focused input.
+<p dir="rtl" style="text-align: right;">
+FlowAI هو تطبيق أندرويد مفتوح المصدر يستخدم خدمة إمكانية الوصول (Accessibility Service) الذكية ليمكنك من كتابة أوامر <code>/ai</code> في أي مكان تكتب فيه.  
+عند كتابة <code>/ai</code> متبوعة بطلبك، يقوم التطبيق بإرسالها إلى واجهة برمجة تطبيقات Google Gemini AI ويستبدل الأمر مباشرة بردّ ذكي ومهني بدون الحاجة للتبديل بين التطبيقات أو النسخ واللصق.
+</p>
+---
 
-### Key Features
-- Works system‑wide in any text field
-- Inline generation with `/ai` trigger
-- Fast streaming output (Gemini)
-- Modern Flutter UI with i18n (English/Arabic)
+## ✨ ما هو FlowAI؟
 
-### Download
-- Grab the latest APK from the Releases page: [Releases](https://github.com/yourusername/flow-ai/releases)
-
-### Getting Started
-1) Download and install the APK from Releases
-2) Open the app and complete onboarding
-3) Enable the accessibility service when prompted
-4) Start typing `/ai Your prompt here /` in any text field
-
-### Development Setup
-```bash
-git clone https://github.com/yourusername/flow-ai.git
-cd flow-ai
-flutter pub get
-flutter run
-```
-
-### First‑time configuration
-- Enable the accessibility service from the app or system settings
-- Optional: configure trigger prefix in settings (default: `/ai`)
-
-### Troubleshooting
-- If nothing happens, ensure the accessibility service is enabled
-- For API/rate‑limit errors the app now shows descriptive messages
-
-### License & Contributing
-PRs are welcome. See LICENSE for details.
-
-</details>
-
-<details>
-<summary><strong>العربية</strong></summary>
-
-### ما هو FlowAI؟
-يوفّر FlowAI توليد النصوص بالذكاء الاصطناعي داخل أي مربع نص على أندرويد. اكتب `/ai` ثم اكتب طلبك، وسيستبدل FlowAI النص مباشرة بالناتج.
-
-### لماذا هذا المشروع؟ (المشكلة → الحل)
-- المشكلة: الاعتماد على النسخ/اللصق والتنقل بين التطبيقات لاستخدام الذكاء الاصطناعي يعطّل سير العمل.
-- الحل: خدمة وصول خفيفة تلتقط المُحفّز (`/ai`) وتبث الناتج مباشرة إلى حقل الإدخال النشط.
-
-### المزايا الرئيسية
-- يعمل في أي مربع نص على مستوى النظام
-- توليد داخل الحقل باستخدام المُحفّز `/ai`
-- بث سريع للناتج (Gemini)
-- واجهة حديثة مع دعم للغات (العربية/الإنجليزية)
-
-### التحميل
-- قم بتنزيل ملف الـAPK من صفحة الإصدارات: [الإصدارات](https://github.com/yourusername/flow-ai/releases)
-
-### البدء
-1) قم بتثبيت التطبيق من صفحة الإصدارات
-2) افتح التطبيق وأكمل الإعداد الأولي
-3) فعّل خدمة تسهيلات الاستخدام عند الطلب
-4) ابدأ بالكتابة: `/ai طلبك هنا/` في أي مربع نص
-
-### إعداد التطوير
-```bash
-git clone https://github.com/yourusername/flow-ai.git
-cd flow-ai
-flutter pub get
-flutter run
-```
-
-### الإعداد لأول مرة
-- فعّل خدمة تسهيلات الاستخدام من داخل التطبيق أو من الإعدادات
-- اختياري: عدّل مُحفّز الكتابة من الإعدادات (الافتراضي: `/ai`)
-
-### استكشاف الأخطاء وإصلاحها
-- إن لم يحدث شيء، تأكد من تفعيل خدمة تسهيلات الاستخدام
-- عند أخطاء الشبكة أو الحدّ اليومي ستظهر الآن رسائل وصفية واضحة
-
-### الترخيص والمساهمة
-نرحّب بالمساهمات. راجع ملف الترخيص.
-
-</details>
+- تطبيق ذكي يعتمد على Accessibility Service.  
+- يمكنك تشغيل أوامر AI مباشرة أثناء الكتابة.  
+- لا حاجة لاستبدال لوحة المفاتيح.  
+- يستخدم Google Gemini API.  
+- مفتوح المصدر مع تحكم كامل للمستخدم بمفاتيح API الخاصة به.
 
 ---
 
-Note: FlowAI requires the Accessibility Service permission to function. The app does not collect or store your personal data; it only processes the text you explicitly send to generate AI output.
+## 🌟 المشكلة التي أحلها
+
+- الإزعاج الناتج عن التنقل بين التطبيقات عند الحاجة إلى نصوص مهنية أو مصقولة.  
+- الحاجة لأداة AI تعمل في نفس المكان الذي تكتب فيه.  
+- الحفاظ على تدفق كتابة سلس ومن دون انقطاع.
+
+---
+
+## 🚀 الميزات الرئيسية
+
+- تشغيل AI في أي مكان بكتابة <code>/ai</code>.  
+- استبدال ذكي وفوري للنص المدخل بالنص الناتج من AI.  
+- يعمل مع أي لوحة مفاتيح مثل Gboard و SwiftKey.  
+- لا يحتاج إلى استبدال لوحة المفاتيح.  
+- يضمن خصوصيتك ولا يخزن بياناتك.
+
+---
+
+## 🔒 الخصوصية
+
+خصوصيتك أولوية قصوى! 🛡️  
+FlowAI لا يخزن أو يشارك بيانات نصوصك. ينشط فقط عند كتابة <code>/ai</code> — كل شيء يتم بأمان وشفافية.
+
+---
+
+## 📥 التحميل
+
+يمكنك تحميل أحدث إصدار من FlowAI من صفحة الإصدارات على GitHub:  
+[تحميل FlowAI](https://github.com/MohamedAlkindi/flow_ai/releases)
+
+---
+
+## 🚀 كيفية البدء
+
+**الطريقة الأسهل:**  
+حمّل التطبيق مباشرة من صفحة الإصدارات وثبته على جهازك.
+
+**أو من المصدر:**  
+1. استنساخ المستودع:  
+   ```bash
+   git clone https://github.com/MohamedAlkindi/flow_ai.git
+
+2. أضف مفتاح API الخاص بـ Google Gemini في التطبيق.
+
+
+3. بناء وتشغيل التطبيق:
+
+flutter run
+
+
+4. فعل خدمة إمكانية الوصول (Accessibility Service) الخاصة بـ FlowAI في إعدادات أندرويد.
+
+
+5. ابدأ الكتابة في أي مكان:
+
+/ai اكتب اعتذارًا مهنيًا للرد المتأخر
+
+وسترى رد AI ذكيًا يُستبدل مباشرة بطلبك!
+
+
+
+
+---
+
+## 🎥 معاينة التطبيق
+
+
+https://github.com/user-attachments/assets/0291a027-9a8c-43b3-9189-8978a0d6c6d8
+
+---
+
+## 📸 لقطات الشاشة
+<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٠٤" src="https://github.com/user-attachments/assets/42a86a67-e44f-40a9-a46d-592970141e3e" />
+<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٢٣" src="https://github.com/user-attachments/assets/d55b9883-f8fc-47cb-a240-d8142bdd725a" />
+<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٣٦" src="https://github.com/user-attachments/assets/60ee6bd3-0e97-4142-be2b-b95f590e6532" />
+
+---
+
+## 🤝 المساهمة
+
+نرحب بالمساهمات والاقتراحات!
+للمساهمة أو التعاون، لا تتردد بالتواصل على:
+bakirmohamedsami@gmail.com
+
+
+---
+
+## ❤️ شكرًا لدعمك! استمتع بالكتابة السلسة مع FlowAI.
+
+
+---
+</details>
+<h2 id="english">🇺🇸 English</h2>
+<details>
+  <summary>Show Details</summary>
+FlowAI is an open-source Android app using a smart Accessibility Service that lets you type /ai commands anywhere you write.
+When you type /ai followed by your prompt, the app sends it to the Google Gemini AI API and instantly replaces your command with a polished AI-generated reply — no app switching or copy-pasting needed.
+
+
+---
+
+## ✨ What is FlowAI?
+
+- A smart Accessibility Service-based app.
+
+- Trigger AI commands directly as you type.
+
+- No keyboard replacement needed.
+
+- Uses Google Gemini API.
+
+- Fully open source with developers control over API keys.
+
+
+
+---
+
+## 🌟 The Problem I Solve
+
+- The annoying hassle of switching apps when you want professional or polished writing.
+
+- The need for an AI tool working directly where you type.
+
+- Keeping your typing flow uninterrupted and smooth.
+
+
+
+---
+
+## 🚀 Core Features
+
+- Trigger AI anywhere by typing /ai.
+
+- Instant, smart inline replacement of your typed request with AI output.
+
+- Works with any keyboard like Gboard, SwiftKey, etc.
+
+- No keyboard replacement needed.
+
+- Privacy-first — does not store your text data.
+
+
+
+---
+
+## 🔒 Privacy
+
+Your privacy is paramount! 🛡️
+FlowAI does not store or share your text data. It only activates when /ai is typed — everything happens securely and transparently.
+
+
+---
+
+## 📥 Download
+
+You can download the latest release of FlowAI from the GitHub releases page:
+Download FlowAI
+
+
+---
+
+## 🚀 Getting Started
+
+The easiest way:
+Download the app directly from the Releases page and install it on your device.
+
+Or from source:
+
+1. Clone the repo:
+
+git clone https://github.com/MohamedAlkindi/flow_ai.git
+
+
+2. Add your Google Gemini API key in the app.
+
+
+3. Build and run the app:
+
+flutter run
+
+
+4. Enable the FlowAI Accessibility Service in Android settings.
+
+
+5. Start typing anywhere:
+
+/ai write a professional apology for late reply
+
+and watch your request instantly replaced with smart AI text!
+
+
+
+
+---
+
+## 🎥 App Preview
+
+
+https://github.com/user-attachments/assets/fbe0a5b3-0d91-4363-a324-b19ee59ac06a
+
+
+---
+
+## 📸 Screenshots
+<img width="400" height="800" alt="SmartSelect_20250810_170035" src="https://github.com/user-attachments/assets/d696e763-7fe0-4e01-905b-a70f0ad8b245" />
+<img width="400" height="800" alt="SmartSelect_20250810_170255_1" src="https://github.com/user-attachments/assets/b12abce4-9b0b-40b1-8dd8-6434c68a8652" />
+<img width="400" height="800" alt="SmartSelect_20250810_170332" src="https://github.com/user-attachments/assets/49bf3595-614f-4302-b15e-54fb729f3adb" />
+
+---
+
+## 🤝 Contributing
+
+Contributions and suggestions are welcome!
+To contribute or collaborate, feel free to reach out at:
+bakirmohamedsami@gmail.com
+
+
+---
+
+## ❤️ Thanks for your support! Enjoy seamless typing with FlowAI.
