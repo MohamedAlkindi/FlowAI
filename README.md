@@ -84,7 +84,7 @@ flutter run
 
 5. ابدأ الكتابة في أي مكان:
 
-/ai اكتب اعتذارًا مهنيًا للرد المتأخر
+/ai اكتب اعتذارًا مهنيًا للرد المتأخر/
 
 وسترى رد AI ذكيًا يُستبدل مباشرة بطلبك!
 
@@ -236,7 +236,7 @@ flutter run
 
 5. Start typing anywhere:
 
-/ai write a professional apology for late reply
+/ai write a professional apology for late reply/
 
 and watch your request instantly replaced with smart AI text!
 
