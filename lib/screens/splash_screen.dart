@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../cubits/app_cubit.dart';
 import '../cubits/app_states.dart';
-import 'welcome_screen.dart';
-import 'home_screen.dart';
 import '../l10n/l10n.dart';
+import 'home_screen/home_screen.dart';
+import 'welcome_screen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,37 +51,6 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 120,
               height: 120,
             ),
-
-            // Container(
-            //   width: 120,
-            //   height: 120,
-            //   decoration: BoxDecoration(
-            //     color: const Color(0xFF16213E),
-            //     borderRadius: BorderRadius.circular(30),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         color: const Color(0xFF0F3460).withValues(alpha: 0.3),
-            //         blurRadius: 20,
-            //         offset: const Offset(0, 10),
-            //       ),
-            //     ],
-            //   ),
-            //   child: const Icon(
-            //     Icons.auto_awesome,
-            //     size: 60,
-            //     color: Color(0xFFE94560),
-            //   ),
-            // ),
-            // const SizedBox(height: 30),
-            // Text(
-            //   t.t('app_title'),
-            //   style: GoogleFonts.poppins(
-            //     fontSize: 32,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.white,
-            //     letterSpacing: 1.2,
-            //   ),
-            // ),
             const SizedBox(height: 10),
             Text(
               t.t('ai_tagline'),
