@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubits/app_cubit.dart';
 import '../cubits/app_states.dart';
 import 'welcome_screen.dart';
-import 'home_screen.dart';
+import 'home_screen/home_screen.dart';
 import '../l10n/l10n.dart';
 
 class SplashScreen extends StatefulWidget {
