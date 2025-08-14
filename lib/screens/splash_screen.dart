@@ -6,7 +6,7 @@ import '../cubits/app_cubit.dart';
 import '../cubits/app_states.dart';
 import '../l10n/l10n.dart';
 import 'home_screen/home_screen.dart';
-import 'welcome_screen.dart';
+import 'welcome_screen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
