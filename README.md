@@ -14,7 +14,7 @@
 
 <details>
 
-<summary>عرض العربية</summary>
+<summary>اضغط هنا لعرض العربية</summary>
 
 <p dir="rtl" style="text-align: right;">
 FlowAI هو تطبيق أندرويد مفتوح المصدر يستخدم خدمة إمكانية الوصول (Accessibility Service) الذكية ليمكنك من كتابة أوامر <code>/ai</code> في أي مكان تكتب فيه.  
@@ -146,7 +146,7 @@ bakirmohamedsami@gmail.com
 </details>
 <h2 id="english">🇺🇸 English</h2>
 <details>
-  <summary>Show Details</summary>
+  <summary>Click Here to Show Details</summary>
 FlowAI is an open-source Android app using a smart Accessibility Service that lets you type /ai commands anywhere you write.
 When you type /ai followed by your prompt, the app sends it to the Google Gemini AI API and instantly replaces your command with a polished AI-generated reply — no app switching or copy-pasting needed.
 
