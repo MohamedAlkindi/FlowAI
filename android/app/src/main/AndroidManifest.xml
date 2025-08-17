@@ -29,7 +29,7 @@
         
         <!-- Accessibility Service -->
         <service
-            android:name=".PurposeFlowAccessibilityService"
+            android:name=".FlowAccessibilityService"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:label="FlowAI Accessibility Service">

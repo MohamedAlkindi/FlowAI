@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/screens/home_screen/widgets/accessibility_section.dart';
 import 'package:flow_ai/screens/home_screen/widgets/instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/result_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/status_card.dart';
+import 'package:flow_ai/screens/home_screen/widgets/trigger_popup.dart';
 import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
-import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../l10n/l10n.dart';
@@ -26,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _promptController = TextEditingController();
   String? _functionResult;
   String? _oemBrand;
-
+  String? prefixTrigger;
+  String? suffixTrigger;
   @override
   void initState() {
     super.initState();
@@ -69,16 +72,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
+          // Refersh button.
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: () async {
               await _refreshStatus();
-              showSnackBar(
-                t.t('status_refreshed'),
-                context: context,
-              );
             },
             tooltip: t.t('status_refreshed'),
+          ),
+          // Settings button
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.white),
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (ctx) => TriggerPopup(
+                  currentStart: "/ai",
+                  currentEnd: "/",
+                  cubit: context.read<AppCubit>(),
+                ),
+              );
+            },
+            tooltip: "Customize Triggers",
+            // tooltip: t.t('status_refreshed'),
           ),
         ],
       ),
