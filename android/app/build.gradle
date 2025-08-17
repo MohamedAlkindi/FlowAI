@@ -8,8 +8,9 @@ plugins {
 android {
     namespace = "com.example.flow_ai"
     compileSdk = 34
-    ndkVersion = flutter.ndkVersion
-
+    ndkVersion = "28.2.13676358"
+    buildToolsVersion ="33.0.1"
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -21,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.flow_ai"
-        minSdk = 21
+        minSdkVersion flutter.minSdkVersion
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -51,14 +52,14 @@ android {
     buildFeatures {
         buildConfig = true
     }
-    splits {
-        abi{
-            enable true
-            reset()
-            include 'armeabi-v7a','arm64-v8a','x86_64'
-            universalApk false
-        }
-    }
+    // splits {
+    //     abi{
+    //         enable true
+    //         reset()
+    //         include 'armeabi-v7a','arm64-v8a','x86_64'
+    //         universalApk false
+    //     }
+    // }
 }
 
 dependencies {
