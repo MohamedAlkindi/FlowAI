@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/data/data/com.termux/files/usr/opt/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/usr/local/bin/ninja",
+      "-C",
+      "/home/programming/Downloads/My-Codes/Flutter/flow_ai/android/app/.cxx/Debug/6d554l56/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/usr/local/bin/ninja",
+    "-C",
+    "/home/programming/Downloads/My-Codes/Flutter/flow_ai/android/app/.cxx/Debug/6d554l56/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
