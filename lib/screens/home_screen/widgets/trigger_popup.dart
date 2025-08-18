@@ -4,17 +4,16 @@ import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TriggerPopup extends StatefulWidget {
   final String currentStart;
   final String currentEnd;
-  final AppCubit cubit;
 
   const TriggerPopup({
     super.key,
     required this.currentStart,
     required this.currentEnd,
-    required this.cubit,
   });
   @override
   State<TriggerPopup> createState() => _TriggerPopupState();
@@ -101,7 +100,7 @@ class _TriggerPopupState extends State<TriggerPopup> {
               endTrigger: end.isNotEmpty ? end : null,
             );
 
-            widget.cubit.saveUserTriggers(start, end);
+            context.read<AppCubit>().saveUserTriggers(start, end);
             showSnackBar(
               t.t("done"),
               context: context,
