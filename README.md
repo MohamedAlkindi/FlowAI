@@ -1,11 +1,11 @@
 
 <!-- Language Tabs -->
-<p align="center">
+<div align="center">
   
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
   <a href="#arabic"><img src="https://img.shields.io/badge/العربية-🇦🇪-green?style=for-the-badge" alt="Arabic"></a>
   <a href="#english"><img src="https://img.shields.io/badge/English-🇺🇸-blue?style=for-the-badge" alt="English"></a>
-</p>
+</div>
 
 ---
 <!-- Arabic Section -->
