@@ -9,9 +9,8 @@
 
 ---
 <!-- Arabic Section -->
-
-<h2 id="arabic">🇦🇪 العربية</h2>
-
+<div dir="rtl">
+<h2 id="arabic"; dir="rtl">🇦🇪 العربية</h2>
 <details>
 
 <summary>اضغط هنا لعرض العربية</summary>
@@ -143,6 +142,7 @@ bakirmohamedsami@gmail.com
 
 
 ---
+</div>
 </details>
 <h2 id="english">🇺🇸 English</h2>
 <details>
