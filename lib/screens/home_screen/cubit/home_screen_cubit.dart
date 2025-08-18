@@ -5,6 +5,7 @@ import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/screens/home_screen/cubit/home_screen_state.dart';
 import 'package:flow_ai/utils/accessibility_utils.dart';
+import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,11 +47,17 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
       suffixTrigger = state.preferences.triggerSuffix;
       prefixTrigger = state.preferences.triggerPrefix;
     }
+
+    // Tell Kotlin about the triggers when the app, service restarts.
+    await TriggerUtil.setTriggers(
+      startTrigger: prefixTrigger,
+      endTrigger: suffixTrigger,
+    );
   }
 
   Future<void> initMethods(BuildContext context) async {
+    await getTriggers(context);
     await refreshStatus();
     await loadOemBrand();
-    await getTriggers(context);
   }
 }

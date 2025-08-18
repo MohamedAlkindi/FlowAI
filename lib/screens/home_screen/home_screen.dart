@@ -59,8 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
               await showDialog(
                 context: context,
                 builder: (ctx) => TriggerPopup(
-                  currentStart: homeScreenCubit.prefixTrigger ?? "/ai",
-                  currentEnd: homeScreenCubit.suffixTrigger ?? "/",
+                  currentStart: homeScreenCubit.prefixTrigger!.isEmpty
+                      ? "/ai"
+                      : homeScreenCubit.prefixTrigger!,
+                  currentEnd: homeScreenCubit.suffixTrigger!.isEmpty
+                      ? "/"
+                      : homeScreenCubit.suffixTrigger!,
                 ),
               );
             },
