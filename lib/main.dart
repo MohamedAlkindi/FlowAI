@@ -1,11 +1,13 @@
+import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/l10n/localizations/localizations_delegates.dart';
 import 'package:flow_ai/l10n/localizations/supported_locales.dart';
+import 'package:flow_ai/screens/home_screen/cubit/home_screen_cubit.dart';
+import 'package:flow_ai/supabase_initialize.dart';
 import 'package:flow_ai/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubits/app_cubit.dart';
+
 import 'screens/splash_screen.dart';
-import 'package:flow_ai/supabase_initialize.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppCubit(),
+        ),
+        BlocProvider(create: (context) => HomeScreenCubit()),
+      ],
       child: MaterialApp(
         title: 'FlowAI',
         debugShowCheckedModeBanner: false,
