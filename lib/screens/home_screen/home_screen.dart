@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flow_ai/cubits/app_cubit.dart';
+import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/screens/home_screen/widgets/accessibility_section.dart';
 import 'package:flow_ai/screens/home_screen/widgets/instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
@@ -25,16 +26,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isAccessibilityEnabled = false;
-  final _promptController = TextEditingController();
   String? _functionResult;
   String? _oemBrand;
-  String? prefixTrigger;
-  String? suffixTrigger;
+  String? _prefixTrigger;
+  String? _suffixTrigger;
+
   @override
   void initState() {
     super.initState();
     _refreshStatus();
     _loadOemBrand();
+    _getTriggers();
   }
 
   Future<void> _refreshStatus() async {
@@ -53,6 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } catch (_) {}
+  }
+
+  Future<void> _getTriggers() async {
+    final cubit = context.read<AppCubit>();
+    await cubit.loadPreferences();
+    await Future.delayed(const Duration(milliseconds: 600));
+    if (!mounted) return;
+    final state = cubit.state;
+    if (state is AppLoaded) {
+      _suffixTrigger = state.preferences.triggerSuffix;
+      _prefixTrigger = state.preferences.triggerPrefix;
+    }
   }
 
   @override
@@ -87,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
               await showDialog(
                 context: context,
                 builder: (ctx) => TriggerPopup(
-                  currentStart: "/ai",
-                  currentEnd: "/",
+                  currentStart: _prefixTrigger ?? "/ai",
+                  currentEnd: _suffixTrigger ?? "/",
                   cubit: context.read<AppCubit>(),
                 ),
               );
@@ -127,11 +141,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _promptController.dispose();
-    super.dispose();
   }
 }
