@@ -6,7 +6,6 @@ import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/screens/home_screen/widgets/accessibility_section.dart';
 import 'package:flow_ai/screens/home_screen/widgets/instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
-import 'package:flow_ai/screens/home_screen/widgets/result_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/status_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/trigger_popup.dart';
 import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
@@ -26,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isAccessibilityEnabled = false;
-  String? _functionResult;
   String? _oemBrand;
   String? _prefixTrigger;
   String? _suffixTrigger;
@@ -129,10 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
               isAccessibilityEnabled: _isAccessibilityEnabled,
               context: context,
             ),
-            if (_functionResult != null) ...[
-              const SizedBox(height: 16),
-              buildResultCard(text: _functionResult!),
-            ],
             const SizedBox(height: 24),
             buildInstructionsCard(t: t),
             const SizedBox(height: 24),
