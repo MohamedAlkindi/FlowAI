@@ -1,14 +1,17 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flow_ai/cubits/app_cubit.dart';
+import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/screens/home_screen/widgets/accessibility_section.dart';
 import 'package:flow_ai/screens/home_screen/widgets/instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/result_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/status_card.dart';
+import 'package:flow_ai/screens/home_screen/widgets/trigger_popup.dart';
 import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
-import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../l10n/l10n.dart';
@@ -23,20 +26,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isAccessibilityEnabled = false;
-  final _promptController = TextEditingController();
   String? _functionResult;
   String? _oemBrand;
+  String? _prefixTrigger;
+  String? _suffixTrigger;
 
   @override
   void initState() {
     super.initState();
     _refreshStatus();
     _loadOemBrand();
+    _getTriggers();
   }
 
   Future<void> _refreshStatus() async {
     final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();
-    setState(() => _isAccessibilityEnabled = enabled);
+    if (enabled == true) {
+      setState(() => _isAccessibilityEnabled = enabled);
+    }
   }
 
   Future<void> _loadOemBrand() async {
@@ -50,6 +57,18 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } catch (_) {}
+  }
+
+  Future<void> _getTriggers() async {
+    final cubit = context.read<AppCubit>();
+    await cubit.loadPreferences();
+    await Future.delayed(const Duration(milliseconds: 600));
+    if (!mounted) return;
+    final state = cubit.state;
+    if (state is AppLoaded) {
+      _suffixTrigger = state.preferences.triggerSuffix;
+      _prefixTrigger = state.preferences.triggerPrefix;
+    }
   }
 
   @override
@@ -69,16 +88,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
+          // Refersh button.
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: () async {
               await _refreshStatus();
-              showSnackBar(
-                t.t('status_refreshed'),
-                context: context,
-              );
             },
             tooltip: t.t('status_refreshed'),
+          ),
+          // Settings button
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.white),
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (ctx) => TriggerPopup(
+                  currentStart: _prefixTrigger ?? "/ai",
+                  currentEnd: _suffixTrigger ?? "/",
+                  cubit: context.read<AppCubit>(),
+                ),
+              );
+            },
+            tooltip: "Customize Triggers",
+            // tooltip: t.t('status_refreshed'),
           ),
         ],
       ),
@@ -111,11 +143,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _promptController.dispose();
-    super.dispose();
   }
 }

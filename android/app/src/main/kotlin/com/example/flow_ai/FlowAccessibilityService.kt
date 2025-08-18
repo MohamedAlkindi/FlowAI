@@ -15,11 +15,14 @@ import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
-class PurposeFlowAccessibilityService : AccessibilityService() {
+class FlowAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val TAG = "FlowAI"
-        private const val AI_TRIGGER = "/ai"
+        // By default it's "/ai" .
+        var aiTrigger : String = "/ai"
+        // By default it's "/".
+        var endTrigger : String = "/"
     }
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -50,13 +53,16 @@ class PurposeFlowAccessibilityService : AccessibilityService() {
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        if (event.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_SLASH) {
-            val focusedNode = getFocusedEditableNode()
-            if (focusedNode != null && !isGenerating) {
-                val text = focusedNode.text?.toString() ?: ""
-                val span = findAiSpan(text)
-                if (span != null) {
-                    performGeneration(focusedNode, text, span.first, span.second)
+        if (event.action == KeyEvent.ACTION_UP) {
+            val endTriggerChar = endTrigger.firstOrNull()
+            if (endTriggerChar != null && event.unicodeChar == endTriggerChar.code) {
+                val focusedNode = getFocusedEditableNode()
+                if (focusedNode != null && !isGenerating) {
+                    val text = focusedNode.text?.toString() ?: ""
+                    val span = findAiSpan(text)
+                    if (span != null) {
+                        performGeneration(focusedNode, text, span.first, span.second)
+                    }
                 }
             }
         }
@@ -84,9 +90,9 @@ class PurposeFlowAccessibilityService : AccessibilityService() {
     }
 
     private fun findAiSpan(text: String): Pair<Int, Int>? {
-        val start = text.indexOf(AI_TRIGGER)
+        val start = text.indexOf(aiTrigger)
         if (start == -1) return null
-        val end = text.indexOf('/', start + AI_TRIGGER.length)
+        val end = text.indexOf(endTrigger, start + aiTrigger.length)
         if (end == -1) return null
         return Pair(start, end)
     }
@@ -95,7 +101,7 @@ class PurposeFlowAccessibilityService : AccessibilityService() {
         if (isGenerating) return
         if (startIndex < 0 || endIndexInclusive < startIndex || endIndexInclusive >= fullText.length) return
 
-        val inner = fullText.substring(startIndex + AI_TRIGGER.length, endIndexInclusive)
+        val inner = fullText.substring(startIndex + aiTrigger.length, endIndexInclusive)
         val prompt = inner.trim()
         if (prompt.isEmpty()) return
 

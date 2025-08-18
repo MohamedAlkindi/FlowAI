@@ -7,6 +7,7 @@ import android.text.TextUtils
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import com.example.flow_ai.FlowAccessibilityService
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "flow_ai/platform"
@@ -23,6 +24,14 @@ class MainActivity: FlutterActivity() {
                 "openAccessibilitySettings" -> {
                     openAccessibilitySettings()
                     result.success(true)
+                } 
+                "setTriggers" -> {
+                    val newStart = call.argument<String>("startTrigger")
+                    val newEnd = call.argument<String>("endTrigger")
+
+                    if (!newStart.isNullOrEmpty()) FlowAccessibilityService.aiTrigger = newStart
+                    if (!newEnd.isNullOrEmpty()) FlowAccessibilityService.endTrigger = newEnd
+                    result.success(null)
                 }
                 else -> result.notImplemented()
             }
@@ -34,7 +43,7 @@ class MainActivity: FlutterActivity() {
     }
 
     private fun isAccessibilityServiceEnabled(context: Context): Boolean {
-        val expectedComponentName = "${context.packageName}/${PurposeFlowAccessibilityService::class.java.name}"
+        val expectedComponentName = "${context.packageName}/${FlowAccessibilityService::class.java.name}"
         val enabledServicesSetting = Settings.Secure.getString(context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
         if (!enabledServicesSetting.isNullOrEmpty()) {
             val colonSplitter = TextUtils.SimpleStringSplitter(':')

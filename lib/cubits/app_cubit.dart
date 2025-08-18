@@ -1,5 +1,6 @@
 import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../services/preferences_service.dart';
 
 // Cubit
@@ -37,6 +38,23 @@ class AppCubit extends Cubit<AppState> {
       if (currentState is AppLoaded) {
         final updatedPreferences =
             currentState.preferences.copyWith(isFirstLaunch: false);
+        emit(AppLoaded(updatedPreferences));
+      }
+    } catch (e) {
+      emit(AppError(e.toString()));
+    }
+  }
+
+  Future<void> saveUserTriggers(
+      String? prefixTrigger, String? suffixTrigger) async {
+    try {
+      await PreferencesService.saveUserTriggers(prefixTrigger, suffixTrigger);
+      final currentState = state;
+      if (currentState is AppLoaded) {
+        final updatedPreferences = currentState.preferences.copyWith(
+          triggerPrefix: prefixTrigger,
+          triggerSuffix: suffixTrigger,
+        );
         emit(AppLoaded(updatedPreferences));
       }
     } catch (e) {

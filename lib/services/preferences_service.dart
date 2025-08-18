@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/user_preferences.dart';
 
 class PreferencesService {
@@ -38,5 +40,15 @@ class PreferencesService {
     final preferences = await getUserPreferences();
     final updatedPreferences = preferences.copyWith(isFirstLaunch: false);
     await saveUserPreferences(updatedPreferences);
+  }
+
+  static Future<void> saveUserTriggers(
+      String? prefixTrigger, String? suffixTrigger) async {
+    final preferences = await getUserPreferences();
+    final updatedTriggers = preferences.copyWith(
+      triggerPrefix: prefixTrigger,
+      triggerSuffix: suffixTrigger,
+    );
+    await saveUserPreferences(updatedTriggers);
   }
 }
