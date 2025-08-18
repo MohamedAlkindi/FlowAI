@@ -1,4 +1,5 @@
 import 'package:flow_ai/cubits/app_cubit.dart';
+import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +39,12 @@ class _TriggerPopupState extends State<TriggerPopup> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return AlertDialog(
       backgroundColor: const Color(0xFF1A1A2E),
       title: Center(
-        child: const Text(
-          "Set Custom Trigger",
+        child: Text(
+          t.t("setCustomTrigger"),
           style: TextStyle(
             fontSize: 20,
             color: Colors.white,
@@ -53,7 +55,7 @@ class _TriggerPopupState extends State<TriggerPopup> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Current: ${widget.currentStart} text ${widget.currentEnd}",
+            "${t.t("currentSettings")}: ${widget.currentStart} ${t.t("text")} ${widget.currentEnd}",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -61,9 +63,9 @@ class _TriggerPopupState extends State<TriggerPopup> {
           const SizedBox(height: 18),
           TextField(
             controller: _startController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               fillColor: Colors.white,
-              labelText: "Start Trigger",
+              labelText: t.t("startTrigger"),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               hintText: "/ai",
             ),
@@ -73,9 +75,9 @@ class _TriggerPopupState extends State<TriggerPopup> {
             maxLength: 1,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             controller: _endController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               fillColor: Colors.white,
-              labelText: "End Trigger",
+              labelText: t.t("endTrigger"),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               hintText: "/",
             ),
@@ -85,7 +87,7 @@ class _TriggerPopupState extends State<TriggerPopup> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child: Text(t.t("cancel")),
         ),
         ElevatedButton(
           style: ButtonStyle(
@@ -101,12 +103,12 @@ class _TriggerPopupState extends State<TriggerPopup> {
 
             widget.cubit.saveUserTriggers(start, end);
             showSnackBar(
-              "Done!",
+              t.t("done"),
               context: context,
             );
             if (context.mounted) Navigator.pop(context);
           },
-          child: const Text("Save"),
+          child: Text(t.t("save")),
         ),
       ],
     );

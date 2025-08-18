@@ -4,7 +4,7 @@
   "welcome_title_1": "Welcome to FlowAI",
   "welcome_sub_1": "Seamlessly integrate AI-powered text generation into any text input field system-wide.",
   "welcome_title_2": "Type /ai to Generate",
-  "welcome_sub_2": "Simply type \"/ai\" followed by your prompt in any text field to get AI-generated content instantly.",
+  "welcome_sub_2": "Simply type \"/ai\" followed by your prompt and ending with / in any text field to get AI-generated content instantly.",
   "welcome_title_3": "No App Switching",
   "welcome_sub_3": "Stay in your flow. Generate text without leaving your current app or breaking your typing rhythm.",
   "next": "Next",
@@ -24,7 +24,7 @@
   "call_edge": "Call Edge Function",
   "how_to_use": "How to Use",
   "step_1_t": "Type /ai in any text field",
-  "step_1_d": "Start your prompt with /ai followed by your request and end it with /",
+  "step_1_d": "By default start your prompt with /ai followed by your request and end it with /, or change it by pressing the settings button up there.",
   "step_2_t": "Watch \"...\" while generating",
   "step_2_d": "FlowAI will stream the AI response in the text field",
   "step_3_t": "Continue typing",
@@ -62,5 +62,13 @@
   "ts_issue_5_t": "Daily limit or too many requests",
   "ts_issue_5_d": "If you see limit messages, wait and try later. Heavy usage may hit per-minute or daily caps."
   ,
-  "oem_unknown_hint": "If your device brand is not listed, search online for how to enable restricted settings, disable battery optimization, and keep accessibility services running for your specific device/OS version."
+  "oem_unknown_hint": "If your device brand is not listed, search online for how to enable restricted settings, disable battery optimization, and keep accessibility services running for your specific device/OS version.",
+  "setCustomTrigger": "Set Custom Trigger",
+  "currentSettings": "Current Settings",
+  "text": "Text",
+  "startTrigger" : "Start Trigger",
+  "endTrigger" : "End Trigger",
+  "cancel" : "Cancel",
+  "save" : "Save",
+  "done" : "Done!"
 }
