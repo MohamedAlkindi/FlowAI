@@ -1,5 +1,6 @@
 import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/l10n/l10n.dart';
+import 'package:flow_ai/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,8 @@ class _TriggerPopupState extends State<TriggerPopup> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    var appCubit = context.read<AppCubit>();
+    var homeScreenCubit = context.read<HomeScreenCubit>();
     return AlertDialog(
       backgroundColor: const Color(0xFF1A1A2E),
       title: Center(
@@ -99,8 +102,15 @@ class _TriggerPopupState extends State<TriggerPopup> {
               startTrigger: start.isNotEmpty ? start : null,
               endTrigger: end.isNotEmpty ? end : null,
             );
+            // Save the new triggers in the app state
+            appCubit.saveUserTriggers(start, end);
 
-            context.read<AppCubit>().saveUserTriggers(start, end);
+            // Update the HomeScreenCubit with the new triggers
+            homeScreenCubit.prefixTrigger =
+                start.isNotEmpty ? start : widget.currentStart;
+            homeScreenCubit.suffixTrigger =
+                end.isNotEmpty ? end : widget.currentEnd;
+
             showSnackBar(
               t.t("done"),
               context: context,
