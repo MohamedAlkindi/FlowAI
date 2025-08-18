@@ -65,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             tooltip: "Customize Triggers",
-            // tooltip: t.t('status_refreshed'),
           ),
         ],
       ),
