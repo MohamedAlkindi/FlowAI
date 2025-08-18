@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refreshStatus() async {
     final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();
-    setState(() => _isAccessibilityEnabled = enabled);
+    if (enabled == true) {
+      setState(() => _isAccessibilityEnabled = enabled);
+    }
   }
 
   Future<void> _loadOemBrand() async {
