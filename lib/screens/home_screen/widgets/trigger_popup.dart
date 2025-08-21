@@ -93,7 +93,7 @@ class _TriggerPopupState extends State<TriggerPopup> {
         ),
         ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(const Color(0xFF1A1A2E)),
+            backgroundColor: WidgetStateProperty.all(const Color(0xFF1A1A2E)),
           ),
           onPressed: () async {
             final start = _startController.text.trim();
