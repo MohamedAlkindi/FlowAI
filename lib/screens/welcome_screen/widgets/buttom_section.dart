@@ -45,7 +45,7 @@ Widget buildBottomSection({
                   curve: Curves.easeInOut,
                 );
               } else {
-                completeOnboarding(context, context.mounted);
+                completeOnboarding(context);
               }
             },
             style: ElevatedButton.styleFrom(
@@ -68,7 +68,7 @@ Widget buildBottomSection({
         if (currentPage < length - 1) ...[
           const SizedBox(height: 16),
           TextButton(
-            onPressed: () => completeOnboarding(context, context.mounted),
+            onPressed: () => completeOnboarding(context),
             child: Text(
               t.t('skip'),
               style: GoogleFonts.poppins(
@@ -83,13 +83,13 @@ Widget buildBottomSection({
   );
 }
 
-Future<void> completeOnboarding(BuildContext context, bool mounted) async {
+Future<void> completeOnboarding(BuildContext context) async {
   final appCubit = context.read<AppCubit>();
   await appCubit.markFirstLaunchComplete();
 
-  if (!mounted) return;
-
-  Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => const HomeScreen()),
-  );
+  if (context.mounted) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  }
 }

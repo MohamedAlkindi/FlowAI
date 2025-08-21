@@ -111,11 +111,13 @@ class _TriggerPopupState extends State<TriggerPopup> {
             homeScreenCubit.suffixTrigger =
                 end.isNotEmpty ? end : widget.currentEnd;
 
-            showSnackBar(
-              t.t("done"),
-              context: context,
-            );
-            if (context.mounted) Navigator.pop(context);
+            if (context.mounted) {
+              showSnackBar(
+                t.t("done"),
+                context: context,
+              );
+              Navigator.pop(context);
+            }
           },
           child: Text(t.t("save")),
         ),
