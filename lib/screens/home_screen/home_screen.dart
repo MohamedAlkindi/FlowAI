@@ -6,6 +6,7 @@ import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/status_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/trigger_popup.dart';
 import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
+import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,9 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: () async {
-              homeScreenCubit.refreshStatus();
+              await homeScreenCubit.refreshStatus();
+              if (context.mounted) {
+                showSnackBar(
+                  t.t("status_refreshed"),
+                  context: context,
+                );
+              }
             },
-            tooltip: t.t('status_refreshed'),
+            tooltip: t.t('refresh_status'),
           ),
           // Settings button
           IconButton(
@@ -68,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-            tooltip: "Customize Triggers",
+            tooltip: t.t("customize_triggers"),
           ),
         ],
       ),

@@ -52,16 +52,20 @@ Widget buildAccessibilitySection({
             onPressed: () async {
               try {
                 await AccessibilityUtils.openAccessibilitySettings();
-                showSnackBar(
-                  t.t('open_settings'),
-                  context: context,
-                );
+                if (context.mounted) {
+                  showSnackBar(
+                    t.t('open_settings'),
+                    context: context,
+                  );
+                }
               } catch (e) {
-                showSnackBar(
-                  friendlyError(e),
-                  error: true,
-                  context: context,
-                );
+                if (context.mounted) {
+                  showSnackBar(
+                    friendlyError(e),
+                    error: true,
+                    context: context,
+                  );
+                }
               }
             },
             style: ElevatedButton.styleFrom(
