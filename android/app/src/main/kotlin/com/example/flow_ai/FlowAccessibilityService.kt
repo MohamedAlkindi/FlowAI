@@ -1,5 +1,4 @@
 package com.example.flow_ai
-
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.os.Bundle
@@ -16,7 +15,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class FlowAccessibilityService : AccessibilityService() {
-
+    
     companion object {
         private const val TAG = "FlowAI"
         // By default it's "/ai" .
@@ -24,10 +23,10 @@ class FlowAccessibilityService : AccessibilityService() {
         // By default it's "/".
         var endTrigger : String = "/"
     }
-
+    
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     @Volatile private var isGenerating: Boolean = false
-
+    
     override fun onServiceConnected() {
         super.onServiceConnected()
         val info = AccessibilityServiceInfo().apply {
@@ -38,37 +37,70 @@ class FlowAccessibilityService : AccessibilityService() {
         }
         serviceInfo = info
     }
-
+    
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         if (event.eventType == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED) {
+            // --- IME/soft keyboard logic ---
+            val newText = event.text?.joinToString("") ?: ""
+            if (newText.isNotEmpty() && !event.isPassword) {
+                Log.d("FlowAI", "TextChanged: '$newText'")
+                val aiIndex = newText.indexOf(aiTrigger)
+                val endIndex = newText.indexOf(endTrigger, aiIndex + aiTrigger.length)
+                if (aiIndex != -1 && endIndex != -1 && endIndex > aiIndex) {
+                    Log.d("FlowAI", "Trigger via soft keyboard: aiTrigger='$aiTrigger', endTrigger='$endTrigger', aiIndex=$aiIndex, endIndex=$endIndex")
+                    handleTrigger()
+                    return
+                }
+            }
+            // --- Physical keyboard logic (using source.text) ---
             val source = event.source ?: return
             val text = source.text?.toString() ?: event.text.joinToString("")
             if (!isGenerating) {
                 val span = findAiSpan(text)
-                if (span != null && span.second > span.first && text[span.second] == '/') {
+                if (span != null && span.second > span.first && text[span.second] == endTrigger.firstOrNull()) {
                     performGeneration(source, text, span.first, span.second)
                 }
             }
         }
     }
-
+        // Called for physical keyboards
     override fun onKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_UP) {
             val endTriggerChar = endTrigger.firstOrNull()
             if (endTriggerChar != null && event.unicodeChar == endTriggerChar.code) {
-                val focusedNode = getFocusedEditableNode()
-                if (focusedNode != null && !isGenerating) {
-                    val text = focusedNode.text?.toString() ?: ""
-                    val span = findAiSpan(text)
-                    if (span != null) {
-                        performGeneration(focusedNode, text, span.first, span.second)
-                    }
-                }
+                Log.d("FlowAI", "Trigger via physical key: $endTriggerChar")
+                handleTrigger()
             }
         }
         return false
     }
 
+    // Debounce to prevent double firing
+    private var lastTriggerTime = 0L
+    private val triggerCooldown = 200L // ms
+
+    // Shared logic for both paths
+    private fun handleTrigger() {
+        val now = System.currentTimeMillis()
+        if (now - lastTriggerTime < triggerCooldown) return
+        lastTriggerTime = now
+
+        val focusedNode = getFocusedEditableNode()
+        if (focusedNode != null && !isGenerating) {
+            try {
+                val text = focusedNode.text?.toString() ?: ""
+                val span = findAiSpan(text)
+                if (span != null) {
+                    Log.d("FlowAI", "Performing AI generation on span: $span")
+                    performGeneration(focusedNode, text, span.first, span.second)
+                }
+            } finally {
+                // Important: free resources
+                focusedNode.recycle()
+            }
+        }
+    }
+    
     private fun getFocusedEditableNode(): AccessibilityNodeInfo? {
         val root = rootInActiveWindow ?: return null
         val inputFocus = root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
