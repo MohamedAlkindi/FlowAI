@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget buildInstructionStep(String number, String title, String description) {
+Widget buildStepsWidget(String number, String title, String description) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 20),
     child: Row(
