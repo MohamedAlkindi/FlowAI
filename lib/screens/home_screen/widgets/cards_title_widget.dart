@@ -10,14 +10,16 @@ Widget cardTitleRow({required IconData icon, required String cardTitle}) {
         color: Color(0xFFE94560),
       ),
       const SizedBox(width: 12),
-      Text(
-        cardTitle,
-        style: GoogleFonts.poppins(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+      Expanded(
+        child: Text(
+          cardTitle,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          softWrap: true,
         ),
-        softWrap: true,
       ),
     ],
   );
