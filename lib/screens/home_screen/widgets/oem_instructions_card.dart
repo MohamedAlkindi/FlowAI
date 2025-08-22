@@ -17,11 +17,11 @@ Widget buildOemInstructionsCard({
 
   final List<Widget> sections = [];
 
-  if (showAll || isXiaomi) {
+  if (isXiaomi) {
     sections.addAll(showXiaomiInstructions(t: t));
   }
 
-  if (showAll || isSamsung) {
+  if (isSamsung) {
     sections.addAll(showSamsungInstructions(t: t));
   }
 
@@ -60,27 +60,8 @@ Widget buildOemInstructionsCard({
   );
 }
 
-Widget showInstructionsRow(String oemManufacture) {
-  return Row(
-    children: [
-      const Icon(Icons.phone_android, color: Color(0xFFE94560), size: 24),
-      const SizedBox(width: 8),
-      Text(
-        oemManufacture,
-        style: GoogleFonts.poppins(
-          fontSize: 17,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-        ),
-      ),
-    ],
-  );
-}
-
 Iterable<Widget> showXiaomiInstructions({required AppLocalizations t}) {
   return [
-    showInstructionsRow(t.t('xiaomi_heading')),
-    const SizedBox(height: 10),
     buildStepsWidget(t.t('1'), t.t('xiaomi_step_1_t'), t.t('xiaomi_step_1_d')),
     buildStepsWidget(t.t('2'), t.t('xiaomi_step_2_t'), t.t('xiaomi_step_2_d')),
     buildStepsWidget(t.t('3'), t.t('xiaomi_step_3_t'), t.t('xiaomi_step_3_d')),
@@ -90,8 +71,6 @@ Iterable<Widget> showXiaomiInstructions({required AppLocalizations t}) {
 
 Iterable<Widget> showSamsungInstructions({required AppLocalizations t}) {
   return [
-    showInstructionsRow(t.t('samsung_heading')),
-    const SizedBox(height: 10),
     buildStepsWidget(
         t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
     buildStepsWidget(

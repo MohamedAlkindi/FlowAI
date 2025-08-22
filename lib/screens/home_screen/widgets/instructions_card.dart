@@ -12,6 +12,7 @@ Widget buildInstructionsCard({required AppLocalizations t}) {
       borderRadius: BorderRadius.circular(16),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         cardTitleRow(
