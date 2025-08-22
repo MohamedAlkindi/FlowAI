@@ -3,32 +3,32 @@ import 'package:google_fonts/google_fonts.dart';
 
 Widget buildInstructionStep(String number, String title, String description) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 16),
+    padding: const EdgeInsets.only(bottom: 20),
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 24,
-          height: 24,
+          width: 28,
+          height: 28,
           decoration: BoxDecoration(
             color: const Color(0xFFE94560),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
           ),
           child: Center(
             child: Text(
               number,
               style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
                 color: Colors.white,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
@@ -43,7 +43,7 @@ Widget buildInstructionStep(String number, String title, String description) {
                 description,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.grey[400],
+                  color: Colors.grey[300],
                 ),
               ),
             ],

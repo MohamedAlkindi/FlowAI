@@ -16,19 +16,20 @@ Widget buildInstructionsCard({required AppLocalizations t}) {
       children: [
         Row(
           children: [
-            const Icon(Icons.help_outline, color: Color(0xFFE94560), size: 48),
+            const Icon(Icons.help_outline,
+                color: Color(0xFFE94560), size: 40), // Reduced from 48
             const SizedBox(width: 12),
             Text(
               t.t('how_to_use'),
               style: GoogleFonts.poppins(
-                fontSize: 18,
+                fontSize: 20, // Increased from 18
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12), // Reduced from 16
         buildInstructionStep(t.t('1'), t.t('step_1_t'), t.t('step_1_d')),
         buildInstructionStep(t.t('2'), t.t('step_2_t'), t.t('step_2_d')),
         buildInstructionStep(t.t('3'), t.t('step_3_t'), t.t('step_3_d')),

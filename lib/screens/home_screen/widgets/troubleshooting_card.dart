@@ -17,13 +17,13 @@ Widget buildTroubleshootingCard({required AppLocalizations t}) {
         Row(
           children: [
             const Icon(Icons.build_outlined,
-                color: Color(0xFFE94560), size: 48),
+                color: Color(0xFFE94560), size: 40), // Reduced from 48
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 t.t('troubleshooting_title'),
                 style: GoogleFonts.poppins(
-                  fontSize: 18,
+                  fontSize: 20, // Increased from 18
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -31,7 +31,7 @@ Widget buildTroubleshootingCard({required AppLocalizations t}) {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12), // Reduced from 16
         buildInstructionStep(
             t.t('1'), t.t('ts_issue_1_t'), t.t('ts_issue_1_d')),
         buildInstructionStep(

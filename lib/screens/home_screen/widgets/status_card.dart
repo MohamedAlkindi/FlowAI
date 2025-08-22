@@ -12,7 +12,7 @@ Widget buildStatusCard({
 }) {
   return Container(
     width: double.infinity,
-    padding: const EdgeInsets.all(20),
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
     decoration: BoxDecoration(
       color: const Color(0xFF16213E),
       borderRadius: BorderRadius.circular(16),
@@ -27,32 +27,32 @@ Widget buildStatusCard({
       children: [
         Icon(
           isAccessibilityEnabled ? Icons.check_circle : Icons.warning,
-          size: 48,
+          size: 40, // Reduced from 48
           color: isAccessibilityEnabled
               ? const Color(0xFF4CAF50)
               : const Color(0xFFE94560),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12), // Reduced from 16
         Text(
           isAccessibilityEnabled
               ? t.t('status_active')
               : t.t('status_inactive'),
           style: GoogleFonts.poppins(
-            fontSize: 18,
+            fontSize: 20, // Increased for better hierarchy
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6), // Reduced from 8
         Text(
           isAccessibilityEnabled ? t.t('status_ready') : t.t('status_enable'),
           style: GoogleFonts.poppins(
             fontSize: 14,
-            color: Colors.grey[400],
+            color: Colors.grey[300], // Slightly lighter for better contrast
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16), // Reduced from 20
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
@@ -83,14 +83,15 @@ Widget buildStatusCard({
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12), // Reduced from 16
             ),
             child: Text(
               isAccessibilityEnabled
                   ? t.t('manage_in_settings')
                   : t.t('enable_service'),
               style: GoogleFonts.poppins(
-                fontSize: 16,
+                fontSize: 15, // Slightly reduced for button
                 fontWeight: FontWeight.w600,
               ),
             ),

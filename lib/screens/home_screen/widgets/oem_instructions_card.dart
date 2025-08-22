@@ -20,19 +20,20 @@ Widget buildOemInstructionsCard({
     sections.addAll([
       Row(
         children: [
-          const Icon(Icons.phone_android, color: Color(0xFFE94560), size: 28),
+          const Icon(Icons.phone_android,
+              color: Color(0xFFE94560), size: 24), // Reduced from 28
           const SizedBox(width: 8),
           Text(
             t.t('xiaomi_heading'),
             style: GoogleFonts.poppins(
-              fontSize: 16,
+              fontSize: 17, // Increased from 16
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
         ],
       ),
-      const SizedBox(height: 12),
+      const SizedBox(height: 10), // Reduced from 12
       buildInstructionStep(
           t.t('1'), t.t('xiaomi_step_1_t'), t.t('xiaomi_step_1_d')),
       buildInstructionStep(
@@ -47,19 +48,20 @@ Widget buildOemInstructionsCard({
     sections.addAll([
       Row(
         children: [
-          const Icon(Icons.phone_iphone, color: Color(0xFFE94560), size: 28),
+          const Icon(Icons.phone_iphone,
+              color: Color(0xFFE94560), size: 24), // Reduced from 28
           const SizedBox(width: 8),
           Text(
             t.t('samsung_heading'),
             style: GoogleFonts.poppins(
-              fontSize: 16,
+              fontSize: 17, // Increased from 16
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
         ],
       ),
-      const SizedBox(height: 12),
+      const SizedBox(height: 10), // Reduced from 12
       buildInstructionStep(
           t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
       buildInstructionStep(
@@ -86,13 +88,13 @@ Widget buildOemInstructionsCard({
         Row(
           children: [
             const Icon(Icons.warning_amber_outlined,
-                color: Color(0xFFE94560), size: 48),
+                color: Color(0xFFE94560), size: 40), // Reduced from 48
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 t.t('oem_card_title'),
                 style: GoogleFonts.poppins(
-                  fontSize: 18,
+                  fontSize: 20, // Increased from 18
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -100,7 +102,7 @@ Widget buildOemInstructionsCard({
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12), // Reduced from 16
         ...sections,
         if (showAll) ...[
           const SizedBox(height: 8),
@@ -108,7 +110,7 @@ Widget buildOemInstructionsCard({
             t.t('oem_unknown_hint'),
             style: GoogleFonts.poppins(
               fontSize: 13,
-              color: Colors.grey[400],
+              color: Colors.grey,
             ),
           ),
         ],
