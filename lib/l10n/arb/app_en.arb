@@ -35,7 +35,7 @@
   "enter_prompt_first": "Enter a prompt first",
   "response_received": "Response received"
   ,
-  "oem_card_title": "If the service doesn't stay enabled, check OEM restrictions",
+  "oem_card_title": "How to enable service and keep it active",
   "xiaomi_heading": "Xiaomi / Redmi (MIUI)",
   "xiaomi_step_1_t": "Allow unrestricted accessibility",
   "xiaomi_step_1_d": "Settings → Apps → FlowAI → More permissions → Allow Accessibility always (or disable MIUI optimizations that block it).",
@@ -63,7 +63,7 @@
   "ts_issue_5_t": "Daily limit or too many requests",
   "ts_issue_5_d": "If you see limit messages, wait and try later. Heavy usage may hit per-minute or daily caps."
   ,
-  "oem_unknown_hint": "If your device brand is not listed, search online for how to enable restricted settings, disable battery optimization, and keep accessibility services running for your specific device/OS version.",
+  "oem_unknown_hint": "Please search online for how to enable restricted settings, disable battery optimization, and keep accessibility services running for your specific device/OS version.",
   "setCustomTrigger": "Set Custom Trigger",
   "currentSettings": "Current Settings",
   "text": "Text",

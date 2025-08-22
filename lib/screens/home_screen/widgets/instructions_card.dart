@@ -1,7 +1,7 @@
 import 'package:flow_ai/l10n/l10n.dart';
-import 'package:flow_ai/screens/home_screen/widgets/instruction_step.dart';
+import 'package:flow_ai/screens/home_screen/widgets/cards_title_widget.dart';
+import 'package:flow_ai/screens/home_screen/widgets/steps_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget buildInstructionsCard({required AppLocalizations t}) {
   return Container(
@@ -12,26 +12,17 @@ Widget buildInstructionsCard({required AppLocalizations t}) {
       borderRadius: BorderRadius.circular(16),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            const Icon(Icons.help_outline, color: Color(0xFFE94560), size: 48),
-            const SizedBox(width: 12),
-            Text(
-              t.t('how_to_use'),
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ],
+        cardTitleRow(
+          icon: Icons.help_outline,
+          cardTitle: t.t('how_to_use'),
         ),
-        const SizedBox(height: 16),
-        buildInstructionStep(t.t('1'), t.t('step_1_t'), t.t('step_1_d')),
-        buildInstructionStep(t.t('2'), t.t('step_2_t'), t.t('step_2_d')),
-        buildInstructionStep(t.t('3'), t.t('step_3_t'), t.t('step_3_d')),
+        const SizedBox(height: 12), // Reduced from 16
+        buildStepsWidget(t.t('1'), t.t('step_1_t'), t.t('step_1_d')),
+        buildStepsWidget(t.t('2'), t.t('step_2_t'), t.t('step_2_d')),
+        buildStepsWidget(t.t('3'), t.t('step_3_t'), t.t('step_3_d')),
       ],
     ),
   );

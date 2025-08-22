@@ -1,5 +1,6 @@
 import 'package:flow_ai/l10n/l10n.dart';
-import 'package:flow_ai/screens/home_screen/widgets/instruction_step.dart';
+import 'package:flow_ai/screens/home_screen/widgets/cards_title_widget.dart';
+import 'package:flow_ai/screens/home_screen/widgets/steps_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,61 +17,12 @@ Widget buildOemInstructionsCard({
 
   final List<Widget> sections = [];
 
-  if (showAll || isXiaomi) {
-    sections.addAll([
-      Row(
-        children: [
-          const Icon(Icons.phone_android, color: Color(0xFFE94560), size: 28),
-          const SizedBox(width: 8),
-          Text(
-            t.t('xiaomi_heading'),
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 12),
-      buildInstructionStep(
-          t.t('1'), t.t('xiaomi_step_1_t'), t.t('xiaomi_step_1_d')),
-      buildInstructionStep(
-          t.t('2'), t.t('xiaomi_step_2_t'), t.t('xiaomi_step_2_d')),
-      buildInstructionStep(
-          t.t('3'), t.t('xiaomi_step_3_t'), t.t('xiaomi_step_3_d')),
-      const SizedBox(height: 16),
-    ]);
+  if (isXiaomi) {
+    sections.addAll(showXiaomiInstructions(t: t));
   }
 
-  if (showAll || isSamsung) {
-    sections.addAll([
-      Row(
-        children: [
-          const Icon(Icons.phone_iphone, color: Color(0xFFE94560), size: 28),
-          const SizedBox(width: 8),
-          Text(
-            t.t('samsung_heading'),
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 12),
-      buildInstructionStep(
-          t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
-      buildInstructionStep(
-          t.t('2'), t.t('samsung_step_2_t'), t.t('samsung_step_2_d')),
-      buildInstructionStep(
-          t.t('3'), t.t('samsung_step_3_t'), t.t('samsung_step_3_d')),
-    ]);
-  }
-
-  if (sections.isEmpty) {
-    return const SizedBox.shrink();
+  if (isSamsung) {
+    sections.addAll(showSamsungInstructions(t: t));
   }
 
   return Container(
@@ -83,24 +35,11 @@ Widget buildOemInstructionsCard({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            const Icon(Icons.warning_amber_outlined,
-                color: Color(0xFFE94560), size: 48),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                t.t('oem_card_title'),
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
+        cardTitleRow(
+          icon: Icons.warning_amber_outlined,
+          cardTitle: t.t('oem_card_title'),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         ...sections,
         if (showAll) ...[
           const SizedBox(height: 8),
@@ -108,11 +47,31 @@ Widget buildOemInstructionsCard({
             t.t('oem_unknown_hint'),
             style: GoogleFonts.poppins(
               fontSize: 13,
-              color: Colors.grey[400],
+              color: Colors.grey[300],
             ),
           ),
         ],
       ],
     ),
   );
+}
+
+Iterable<Widget> showXiaomiInstructions({required AppLocalizations t}) {
+  return [
+    buildStepsWidget(t.t('1'), t.t('xiaomi_step_1_t'), t.t('xiaomi_step_1_d')),
+    buildStepsWidget(t.t('2'), t.t('xiaomi_step_2_t'), t.t('xiaomi_step_2_d')),
+    buildStepsWidget(t.t('3'), t.t('xiaomi_step_3_t'), t.t('xiaomi_step_3_d')),
+    const SizedBox(height: 16),
+  ];
+}
+
+Iterable<Widget> showSamsungInstructions({required AppLocalizations t}) {
+  return [
+    buildStepsWidget(
+        t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
+    buildStepsWidget(
+        t.t('2'), t.t('samsung_step_2_t'), t.t('samsung_step_2_d')),
+    buildStepsWidget(
+        t.t('3'), t.t('samsung_step_3_t'), t.t('samsung_step_3_d')),
+  ];
 }

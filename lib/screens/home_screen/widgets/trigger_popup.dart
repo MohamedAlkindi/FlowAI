@@ -44,82 +44,106 @@ class _TriggerPopupState extends State<TriggerPopup> {
     var homeScreenCubit = context.read<HomeScreenCubit>();
     return AlertDialog(
       backgroundColor: const Color(0xFF1A1A2E),
-      title: Center(
+      title: Align(
+        alignment: Alignment.centerLeft,
         child: Text(
           t.t("setCustomTrigger"),
-          style: TextStyle(
-            fontSize: 20,
+          style: const TextStyle(
+            fontSize: 22, // Slightly larger
+            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "${t.t("currentSettings")}: ${widget.currentStart} ${t.t("text")} ${widget.currentEnd}",
-            style: TextStyle(
-              color: Colors.white,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              "${t.t("currentSettings")}: ${widget.currentStart} ${t.t("text")} ${widget.currentEnd}",
+              style: const TextStyle(
+                color: Colors.white,
+              ),
             ),
-          ),
-          const SizedBox(height: 18),
-          TextField(
-            controller: _startController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              labelText: t.t("startTrigger"),
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              hintText: "/ai",
+            const SizedBox(height: 18),
+            TextField(
+              controller: _startController,
+              style: const TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                fillColor: Colors.white,
+                labelText: t.t("startTrigger"),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                hintText: "/ai",
+              ),
             ),
-          ),
-          const SizedBox(height: 18),
-          TextField(
-            maxLength: 1,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            controller: _endController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              labelText: t.t("endTrigger"),
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              hintText: "/",
+            const SizedBox(height: 18),
+            TextField(
+              maxLength: 1,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              controller: _endController,
+              style: const TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                fillColor: Colors.white,
+                labelText: t.t("endTrigger"),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                hintText: "/",
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(t.t("cancel")),
-        ),
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(const Color(0xFF1A1A2E)),
-          ),
-          onPressed: () async {
-            final start = _startController.text.trim();
-            final end = _endController.text.trim();
-            await TriggerUtil.setTriggers(
-              startTrigger: start.isNotEmpty ? start : null,
-              endTrigger: end.isNotEmpty ? end : null,
-            );
-            // Save the new triggers in the app state
-            appCubit.saveUserTriggers(start, end);
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                t.t("cancel"),
+                style: const TextStyle(fontSize: 15),
+              ),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    WidgetStateProperty.all(const Color(0xFF1A1A2E)),
+              ),
+              onPressed: () async {
+                final start = _startController.text.trim();
+                final end = _endController.text.trim();
+                await TriggerUtil.setTriggers(
+                  startTrigger: start.isNotEmpty ? start : null,
+                  endTrigger: end.isNotEmpty ? end : null,
+                );
+                // Save the new triggers in the app state
+                appCubit.saveUserTriggers(start, end);
 
-            // Update the HomeScreenCubit with the new triggers
-            homeScreenCubit.prefixTrigger =
-                start.isNotEmpty ? start : widget.currentStart;
-            homeScreenCubit.suffixTrigger =
-                end.isNotEmpty ? end : widget.currentEnd;
+                // Update the HomeScreenCubit with the new triggers
+                homeScreenCubit.prefixTrigger =
+                    start.isNotEmpty ? start : widget.currentStart;
+                homeScreenCubit.suffixTrigger =
+                    end.isNotEmpty ? end : widget.currentEnd;
 
-            if (context.mounted) {
-              showSnackBar(
-                t.t("done"),
-                context: context,
-              );
-              Navigator.pop(context);
-            }
-          },
-          child: Text(t.t("save")),
+                if (context.mounted) {
+                  showSnackBar(
+                    t.t("done"),
+                    context: context,
+                  );
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                t.t("save"),
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
         ),
       ],
     );

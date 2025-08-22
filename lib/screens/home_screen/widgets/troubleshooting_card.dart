@@ -1,7 +1,7 @@
 import 'package:flow_ai/l10n/l10n.dart';
-import 'package:flow_ai/screens/home_screen/widgets/instruction_step.dart';
+import 'package:flow_ai/screens/home_screen/widgets/cards_title_widget.dart';
+import 'package:flow_ai/screens/home_screen/widgets/steps_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget buildTroubleshootingCard({required AppLocalizations t}) {
   return Container(
@@ -14,34 +14,16 @@ Widget buildTroubleshootingCard({required AppLocalizations t}) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            const Icon(Icons.build_outlined,
-                color: Color(0xFFE94560), size: 48),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                t.t('troubleshooting_title'),
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
+        cardTitleRow(
+          icon: Icons.build_outlined,
+          cardTitle: t.t('troubleshooting_title'),
         ),
-        const SizedBox(height: 16),
-        buildInstructionStep(
-            t.t('1'), t.t('ts_issue_1_t'), t.t('ts_issue_1_d')),
-        buildInstructionStep(
-            t.t('2'), t.t('ts_issue_2_t'), t.t('ts_issue_2_d')),
-        buildInstructionStep(
-            t.t('3'), t.t('ts_issue_3_t'), t.t('ts_issue_3_d')),
-        buildInstructionStep(
-            t.t('4'), t.t('ts_issue_4_t'), t.t('ts_issue_4_d')),
-        buildInstructionStep(
-            t.t('5'), t.t('ts_issue_5_t'), t.t('ts_issue_5_d')),
+        const SizedBox(height: 12),
+        buildStepsWidget(t.t('1'), t.t('ts_issue_1_t'), t.t('ts_issue_1_d')),
+        buildStepsWidget(t.t('2'), t.t('ts_issue_2_t'), t.t('ts_issue_2_d')),
+        buildStepsWidget(t.t('3'), t.t('ts_issue_3_t'), t.t('ts_issue_3_d')),
+        buildStepsWidget(t.t('4'), t.t('ts_issue_4_t'), t.t('ts_issue_4_d')),
+        buildStepsWidget(t.t('5'), t.t('ts_issue_5_t'), t.t('ts_issue_5_d')),
       ],
     ),
   );
