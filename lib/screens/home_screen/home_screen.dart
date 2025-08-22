@@ -1,6 +1,5 @@
 import 'package:flow_ai/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flow_ai/screens/home_screen/cubit/home_screen_state.dart';
-import 'package:flow_ai/screens/home_screen/widgets/accessibility_section.dart';
 import 'package:flow_ai/screens/home_screen/widgets/instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/oem_instructions_card.dart';
 import 'package:flow_ai/screens/home_screen/widgets/status_card.dart';
@@ -91,23 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 return buildStatusCard(
                   t: t,
                   isAccessibilityEnabled: state.isAccessibilityEnabled,
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
-              buildWhen: (prev, curr) =>
-                  prev.isAccessibilityEnabled != curr.isAccessibilityEnabled,
-              builder: (context, state) {
-                return buildAccessibilitySection(
-                  t: t,
-                  isAccessibilityEnabled: state.isAccessibilityEnabled,
                   context: context,
                 );
               },
             ),
-            const SizedBox(height: 24),
-            buildInstructionsCard(t: t),
             const SizedBox(height: 24),
             BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
               builder: (context, state) {
@@ -117,6 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
+            const SizedBox(height: 24),
+            buildInstructionsCard(t: t),
             const SizedBox(height: 24),
             buildTroubleshootingCard(t: t),
           ],

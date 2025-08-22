@@ -35,7 +35,7 @@
   "enter_prompt_first": "Enter a prompt first",
   "response_received": "Response received"
   ,
-  "oem_card_title": "If the service doesn't stay enabled, check OEM restrictions",
+  "oem_card_title": "How to enable service and keep it active",
   "xiaomi_heading": "Xiaomi / Redmi (MIUI)",
   "xiaomi_step_1_t": "Allow unrestricted accessibility",
   "xiaomi_step_1_d": "Settings → Apps → FlowAI → More permissions → Allow Accessibility always (or disable MIUI optimizations that block it).",
