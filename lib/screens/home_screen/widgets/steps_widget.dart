@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Widget buildStepsWidget(String number, String title, String description) {
   return Padding(
-    padding: const EdgeInsets.only(left: 7, bottom: 20, top: 15),
+    padding: const EdgeInsets.only(left: 5, bottom: 20, top: 15),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

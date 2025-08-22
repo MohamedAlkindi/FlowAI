@@ -25,10 +25,6 @@ Widget buildOemInstructionsCard({
     sections.addAll(showSamsungInstructions(t: t));
   }
 
-  if (sections.isEmpty) {
-    return const SizedBox.shrink();
-  }
-
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.all(20),
@@ -51,7 +47,7 @@ Widget buildOemInstructionsCard({
             t.t('oem_unknown_hint'),
             style: GoogleFonts.poppins(
               fontSize: 13,
-              color: Colors.grey,
+              color: Colors.grey[300],
             ),
           ),
         ],
