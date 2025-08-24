@@ -500,6 +500,7 @@ class FlowAccessibilityService : AccessibilityService() {
             x = 100
             y = 200
             format = PixelFormat.TRANSLUCENT
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
         }
 
         aiBubbleView = bubbleView

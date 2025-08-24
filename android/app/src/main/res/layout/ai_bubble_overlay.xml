@@ -29,16 +29,19 @@
         android:hint="Enter your prompt..."
         android:textSize="14sp"
         android:minHeight="48dp"
+        android:maxHeight="100dp"
+        android:scrollbars="vertical"
+        android:overScrollMode="always"
+        android:gravity="top|start"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:inputType="textMultiLine|text"
-        android:gravity="top|start"
         android:clickable="true"
         android:longClickable="true"
         android:selectAllOnFocus="false"
         android:enabled="true"
         android:layout_marginBottom="16dp" />
-        
+
     <!-- AI Result Section -->
     <TextView
         android:layout_width="match_parent"
@@ -50,10 +53,12 @@
         android:layout_marginBottom="8dp" />
 
     <ScrollView
+        android:id="@+id/aiResultScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="200dp"
-        android:layout_marginBottom="16dp">
+        android:layout_height="200dp"
+        android:fillViewport="true"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="vertical">
 
         <TextView
             android:id="@+id/aiResultText"
@@ -74,7 +79,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:spacing="8dp">
+        android:baselineAligned="false">
 
         <Button
             android:id="@+id/applyButton"
