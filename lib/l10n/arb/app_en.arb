@@ -72,5 +72,9 @@
   "cancel" : "Cancel",
   "save" : "Save",
   "done" : "Done!",
-  "customize_triggers":"Customize Triggers"
+  "customize_triggers":"Customize Triggers",
+  "grantPermission":"Grant Permission",
+  "later":"Later",
+  "overlayDisplayPermissionTitle":"Overlay Permission Required 'Optional'",
+  "overlayDisplayPermissionTest":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app",
 }

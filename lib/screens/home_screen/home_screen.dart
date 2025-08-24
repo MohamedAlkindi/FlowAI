@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF16213E),
         title: Text(
-          'Overlay Permission Required',
+          AppLocalizations.of(context).t("overlayDisplayPermissionTitle"),
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         content: Text(
-          'FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app.',
+          AppLocalizations.of(context).t("overlayDisplayPermissionText"),
           style: GoogleFonts.poppins(
             fontSize: 16,
             color: Colors.white,
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(context).pop();
             },
             child: Text(
-              'Later',
+              AppLocalizations.of(context).t("later"),
               style: GoogleFonts.poppins(
                 color: const Color(0xFFE94560),
                 fontSize: 16,
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: Text(
-              'Grant Permission',
+              AppLocalizations.of(context).t("grantPermission"),
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
