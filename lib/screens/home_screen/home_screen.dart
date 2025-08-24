@@ -7,6 +7,7 @@ import 'package:flow_ai/screens/home_screen/widgets/trigger_popup.dart';
 import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,10 +21,101 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _hasOverlayPermission = false;
+  static const MethodChannel _channel = MethodChannel('flow_ai/platform');
+
   @override
   void initState() {
     super.initState();
     context.read<HomeScreenCubit>().initMethods(context);
+    _checkOverlayPermission();
+  }
+
+  Future<void> _checkOverlayPermission() async {
+    try {
+      final hasPermission =
+          await _channel.invokeMethod('checkOverlayPermission') ?? false;
+      setState(() {
+        _hasOverlayPermission = hasPermission;
+      });
+
+      // Show permission request dialog if not granted
+      if (!hasPermission && mounted) {
+        _showOverlayPermissionDialog();
+      }
+    } catch (e) {
+      // Handle error
+    }
+  }
+
+  Future<void> _requestOverlayPermission() async {
+    try {
+      await _channel.invokeMethod('requestOverlayPermission');
+      // Recheck after user returns from settings
+      await Future.delayed(const Duration(milliseconds: 500));
+      await _checkOverlayPermission();
+    } catch (e) {
+      // Handle error
+    }
+  }
+
+  void _showOverlayPermissionDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF16213E),
+        title: Text(
+          'Overlay Permission Required',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        content: Text(
+          'FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app.',
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'Later',
+              style: GoogleFonts.poppins(
+                color: const Color(0xFFE94560),
+                fontSize: 16,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _requestOverlayPermission();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFE94560),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text(
+              'Grant Permission',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -91,6 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   t: t,
                   isAccessibilityEnabled: state.isAccessibilityEnabled,
                   context: context,
+                  hasOverlayPermission: _hasOverlayPermission,
+                  onRequestOverlayPermission: _requestOverlayPermission,
                 );
               },
             ),

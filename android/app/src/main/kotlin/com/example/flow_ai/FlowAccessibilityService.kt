@@ -13,6 +13,23 @@ import java.io.BufferedReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.embedding.engine.FlutterEngineCache
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.WindowManager
+import android.view.Gravity
+import android.view.MotionEvent
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Button
+import android.content.Intent
+import android.content.Context
+import android.os.Build
+import android.graphics.PixelFormat
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 class FlowAccessibilityService : AccessibilityService() {
     
@@ -22,11 +39,19 @@ class FlowAccessibilityService : AccessibilityService() {
         var aiTrigger : String = "/ai"
         // By default it's "/".
         var endTrigger : String = "/"
+        @Volatile var instance: FlowAccessibilityService? = null
     }
     
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     @Volatile private var isGenerating: Boolean = false
     
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(TAG, "FlowAccessibilityService onCreate")
+        instance = this
+        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    }
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         val info = AccessibilityServiceInfo().apply {
@@ -129,38 +154,454 @@ class FlowAccessibilityService : AccessibilityService() {
         return Pair(start, end)
     }
 
+    // Store for callbacks
+    private var lastNode: AccessibilityNodeInfo? = null
+    private var lastPrefix: String = ""
+    private var lastSuffix: String = ""
+    private var lastPrompt: String = ""
+    private var lastAIText: String = ""
+    
+    // Store the ORIGINAL source node that won't change when focus shifts
+    private var originalSourceNode: AccessibilityNodeInfo? = null
+    // Remove flutterChannel and obtainFlutterChannel
+
+    // Remove all MethodChannel and Flutter bubble logic
+    // Placeholder for native overlay
+    private var aiBubbleView: android.view.View? = null
+    private var aiBubbleParams: WindowManager.LayoutParams? = null
+    private var windowManager: WindowManager? = null
+
+    private fun removeAIBubble() {
+        aiBubbleView?.let {
+            windowManager?.removeView(it)
+        }
+        aiBubbleView = null
+        aiBubbleParams = null
+    }
+
+    fun handleAIBubbleAction(action: String, newPrompt: String? = null) {
+        // TODO: Called from MainActivity via MethodChannel when user acts
+        when (action) {
+            "apply" -> {
+                lastNode?.let {
+                    replaceText(it, lastPrefix + lastAIText + lastSuffix)
+                }
+            }
+            "cancel" -> {
+                // Do nothing, just dismiss
+            }
+            "redo" -> {
+                val prompt = newPrompt ?: lastPrompt
+                serviceScope.launch {
+                    try {
+                        invokeSupabaseFunction(prompt) { delta ->
+                            lastAIText = delta
+                            showDraggableAIBubble(prompt, delta,
+                                onApply = { aiText ->
+                                    replaceText(lastNode ?: return@showDraggableAIBubble, lastPrefix + aiText + lastSuffix)
+                                },
+                                onCancel = {
+                                    // Dismiss bubble, do nothing
+                                },
+                                onRedo = { newPrompt ->
+                                    // Re-invoke AI with new prompt
+                                    serviceScope.launch {
+                                        invokeSupabaseFunction(newPrompt) { newDelta ->
+                                            Handler(Looper.getMainLooper()).post {
+                                                showDraggableAIBubble(newPrompt, newDelta, onApply = { aiText ->
+                                                    replaceText(lastNode ?: return@showDraggableAIBubble, lastPrefix + aiText + lastSuffix)
+                                                }, onCancel = {}, onRedo = {})
+                                            }
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    } catch (e: Exception) {
+                        showDraggableAIBubble(prompt, "Error: ${e.message}",
+                            onApply = { aiText ->
+                                replaceText(lastNode ?: return@showDraggableAIBubble, lastPrefix + aiText + lastSuffix)
+                            },
+                            onCancel = {
+                                // Dismiss bubble, do nothing
+                            },
+                            onRedo = { newPrompt ->
+                                // Re-invoke AI with new prompt
+                                serviceScope.launch {
+                                    invokeSupabaseFunction(newPrompt) { newDelta ->
+                                        Handler(Looper.getMainLooper()).post {
+                                            showDraggableAIBubble(newPrompt, newDelta, onApply = { aiText ->
+                                                replaceText(lastNode ?: return@showDraggableAIBubble, lastPrefix + aiText + lastSuffix)
+                                            }, onCancel = {}, onRedo = {})
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    } finally {
+                        isGenerating = false
+                    }
+                }
+            }
+        }
+    }
+
     private fun performGeneration(source: AccessibilityNodeInfo, fullText: String, startIndex: Int, endIndexInclusive: Int) {
-        if (isGenerating) return
-        if (startIndex < 0 || endIndexInclusive < startIndex || endIndexInclusive >= fullText.length) return
-
-        val inner = fullText.substring(startIndex + aiTrigger.length, endIndexInclusive)
-        val prompt = inner.trim()
-        if (prompt.isEmpty()) return
-
-        source.performAction(AccessibilityNodeInfo.ACTION_FOCUS)
+        if (isGenerating) {
+            Log.w(TAG, "Already generating, skipping request")
+            return
+        }
 
         isGenerating = true
+        
+        // Extract the prompt (text between triggers, excluding the triggers themselves)
+        val prompt = fullText.substring(startIndex + aiTrigger.length, endIndexInclusive)
+        
+        // Get text before the start trigger (e.g., "Hello there ")
         val prefixText = fullText.substring(0, startIndex)
-        val suffixText = if (endIndexInclusive + 1 <= fullText.length - 1) fullText.substring(endIndexInclusive + 1) else ""
+        
+        // Get text after the end trigger (e.g., " now bye")
+        val suffixText = if (endIndexInclusive + endTrigger.length <= fullText.length) {
+            fullText.substring(endIndexInclusive + endTrigger.length)
+        } else {
+            ""
+        }
 
-        replaceText(source, prefixText + "…" + suffixText)
+        // Store for callbacks
+        lastNode = source
+        originalSourceNode = source  // Store the ORIGINAL source node that won't change
+        lastPrefix = prefixText
+        lastSuffix = suffixText
+        lastPrompt = prompt
+
+        Log.d(TAG, "Generation started - Prompt: '$prompt', Prefix: '$prefixText', Suffix: '$suffixText'")
+
+        // Show dots immediately on the main thread, replacing ONLY the trigger section
+        // This preserves the surrounding text: prefixText + "..." + suffixText
+        Handler(Looper.getMainLooper()).post {
+            val textWithDots = prefixText + "…" + suffixText
+            Log.d(TAG, "Replacing trigger section with dots: '$textWithDots'")
+            replaceText(source, textWithDots)
+        }
 
         serviceScope.launch {
             try {
                 invokeSupabaseFunction(prompt) { delta ->
-                    withContext(Dispatchers.Main) {
-                        replaceText(source, prefixText + delta + suffixText)
+                    lastAIText = delta
+                    Log.d(TAG, "AI response received: '$delta'")
+                    Handler(Looper.getMainLooper()).post {
+                        if (Settings.canDrawOverlays(this@FlowAccessibilityService)) {
+                            showDraggableAIBubble(
+                                prompt,
+                                delta,
+                                onApply = { textToApply ->
+                                    // Replace the dots with AI text in the ORIGINAL app's text field
+                                    val finalText = lastPrefix + textToApply + lastSuffix
+                                    Log.d(TAG, "Applying AI text to original app field: '$finalText' (preserving surrounding text)")
+                                    originalSourceNode?.let { node ->
+                                        replaceText(node, finalText)
+                                    }
+                                    removeAIBubble()
+                                },
+                                onCancel = {
+                                    // Restore the original trigger text in the ORIGINAL app's text field
+                                    val originalText = lastPrefix + aiTrigger + lastPrompt + endTrigger + lastSuffix
+                                    Log.d(TAG, "Canceling - restoring original trigger in original app field: '$originalText' (preserving surrounding text)")
+                                    originalSourceNode?.let { node ->
+                                        replaceText(node, originalText)
+                                    }
+                                    removeAIBubble()
+                                },
+                                onRedo = { newPrompt ->
+                                    // Re-trigger generation but KEEP the bubble visible
+                                    serviceScope.launch {
+                                        try {
+                                            invokeSupabaseFunction(newPrompt) { newDelta ->
+                                                lastAIText = newDelta
+                                                Handler(Looper.getMainLooper()).post {
+                                                    val bubbleView = aiBubbleView
+                                                    if (bubbleView != null) {
+                                                        val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
+                                                        aiResultText?.text = newDelta
+                                                    }
+                                                }
+                                            }
+                                        } catch (e: Exception) {
+                                            Handler(Looper.getMainLooper()).post {
+                                                val bubbleView = aiBubbleView
+                                                if (bubbleView != null) {
+                                                    val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
+                                                    aiResultText?.text = "Error: ${e.message}"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            )
+                        } else {
+                            Log.w(TAG, "SYSTEM_ALERT_WINDOW permission not granted, falling back to direct replacement")
+                            val finalText = lastPrefix + delta + lastSuffix
+                            Log.d(TAG, "Direct replacement: '$finalText' (preserving surrounding text)")
+                            replaceText(source, finalText)
+                        }
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Edge function error", e)
-                withContext(Dispatchers.Main) {
-                    replaceText(source, prefixText + "Error: ${e.message}" + suffixText)
+                val errorMsg = "Error: ${e.message}"
+                Log.e(TAG, "Edge function error: $errorMsg", e)
+                Handler(Looper.getMainLooper()).post {
+                    if (Settings.canDrawOverlays(this@FlowAccessibilityService)) {
+                        showDraggableAIBubble(
+                            prompt,
+                            errorMsg,
+                            onApply = { textToApply ->
+                                // Replace the dots with error text in the ORIGINAL app's text field
+                                val finalText = lastPrefix + textToApply + lastSuffix
+                                Log.d(TAG, "Applying error text to original app field: '$finalText' (preserving surrounding text)")
+                                originalSourceNode?.let { node ->
+                                    replaceText(node, finalText)
+                                }
+                                removeAIBubble()
+                            },
+                            onCancel = {
+                                // Restore the original trigger text in the ORIGINAL app's text field
+                                val originalText = lastPrefix + aiTrigger + lastPrompt + endTrigger + lastSuffix
+                                Log.d(TAG, "Canceling error - restoring original trigger in original app field: '$originalText' (preserving surrounding text)")
+                                originalSourceNode?.let { node ->
+                                    replaceText(node, originalText)
+                                }
+                                removeAIBubble()
+                            },
+                            onRedo = { newPrompt ->
+                                // Just call AI again and update existing aiResultText
+                                serviceScope.launch {
+                                    try {
+                                        invokeSupabaseFunction(newPrompt) { newDelta ->
+                                            lastAIText = newDelta
+                                            Handler(Looper.getMainLooper()).post {
+                                                val bubbleView = aiBubbleView
+                                                val aiResultText = bubbleView?.findViewById<TextView>(R.id.aiResultText)
+                                                aiResultText?.text = newDelta
+                                            }
+                                        }
+                                    } catch (e: Exception) {
+                                        Handler(Looper.getMainLooper()).post {
+                                            val bubbleView = aiBubbleView
+                                            val aiResultText = bubbleView?.findViewById<TextView>(R.id.aiResultText)
+                                            aiResultText?.text = "Error: ${e.message}"
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    } else {
+                        Log.w(TAG, "SYSTEM_ALERT_WINDOW permission not granted, falling back to direct replacement for error")
+                        val finalText = lastPrefix + errorMsg + lastSuffix
+                        Log.d(TAG, "Direct error replacement: '$finalText' (preserving surrounding text)")
+                        replaceText(source, finalText)
+                    }
                 }
             } finally {
                 isGenerating = false
             }
         }
+    }
+
+    private fun findFocusedEditableNode(): AccessibilityNodeInfo? {
+        val rootNode = rootInActiveWindow ?: return null
+        
+        // Search for focused editable nodes
+        val focusedNodes = rootNode.findAccessibilityNodeInfosByViewId("android:id/edit")
+        for (node in focusedNodes) {
+            if (node.isFocused && node.isEditable) {
+                return node
+            }
+        }
+        
+        // If no specific edit ID found, search more broadly
+        return findFocusedEditableNodeRecursive(rootNode)
+    }
+    
+    private fun findFocusedEditableNodeRecursive(node: AccessibilityNodeInfo?): AccessibilityNodeInfo? {
+        if (node == null) return null
+        
+        if (node.isFocused && node.isEditable) {
+            return node
+        }
+        
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i)
+            val result = findFocusedEditableNodeRecursive(child)
+            if (result != null) {
+                return result
+            }
+        }
+        
+        return null
+    }
+    
+    private fun getCursorPosition(node: AccessibilityNodeInfo): Int {
+        // Try to get cursor position from selection
+        val selectionStart = node.textSelectionStart
+        if (selectionStart >= 0) {
+            return selectionStart
+        }
+        
+        // Fallback to text length if no selection info
+        val text = node.text?.toString() ?: ""
+        return text.length
+    }
+    private fun showDraggableAIBubble(
+        prompt: String,
+        aiText: String,
+        onApply: (String) -> Unit,
+        onCancel: () -> Unit,
+        onRedo: (String) -> Unit
+    ) {
+        Log.d(TAG, "Showing AI bubble with prompt: '$prompt', AI text: '$aiText'")
+
+        if (windowManager == null) {
+            windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        }
+
+        if (!Settings.canDrawOverlays(this)) {
+            Log.w(TAG, "No overlay permission, falling back to direct replacement")
+            onApply(aiText)
+            return
+        }
+
+        removeAIBubble()
+
+        val inflater = LayoutInflater.from(this)
+        val bubbleView = inflater.inflate(R.layout.ai_bubble_overlay, null)
+
+        val promptEditText = bubbleView.findViewById<EditText>(R.id.promptEditText)
+        val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
+        val applyButton = bubbleView.findViewById<Button>(R.id.applyButton)
+        val cancelButton = bubbleView.findViewById<Button>(R.id.cancelButton)
+        val redoButton = bubbleView.findViewById<Button>(R.id.redoButton)
+
+        promptEditText?.setText(prompt)
+        aiResultText?.text = aiText
+
+        // --- Focus handling: start as NOT_FOCUSABLE ---
+        val params = WindowManager.LayoutParams().apply {
+            width = WindowManager.LayoutParams.WRAP_CONTENT
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+            type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+            }
+            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+            gravity = Gravity.TOP or Gravity.START
+            x = 100
+            y = 200
+            format = PixelFormat.TRANSLUCENT
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        }
+
+        aiBubbleView = bubbleView
+        aiBubbleParams = params
+
+        try {
+            windowManager?.addView(bubbleView, params)
+            Log.d(TAG, "AI bubble added")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to add AI bubble", e)
+            onApply(aiText)
+            return
+        }
+
+        // --- Toggle focusable only when EditText is tapped ---
+        promptEditText?.setOnFocusChangeListener { _, hasFocus ->
+            aiBubbleParams?.let { currentParams ->
+                currentParams.flags = if (hasFocus) {
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                } else {
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                }
+                try {
+                    windowManager?.updateViewLayout(bubbleView, currentParams)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to update bubble focus flags", e)
+                }
+            }
+        }
+
+        // --- Helper to reset focus back to NOT_FOCUSABLE ---
+        fun resetFocus() {
+            aiBubbleParams?.let { currentParams ->
+                currentParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                try {
+                    windowManager?.updateViewLayout(bubbleView, currentParams)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to reset bubble focus", e)
+                }
+            }
+            // also clear keyboard
+            promptEditText?.clearFocus()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(promptEditText?.windowToken, 0)
+        }
+
+        // --- Button actions ---
+        applyButton?.setOnClickListener {
+            val finalText = aiResultText?.text?.toString() ?: aiText
+            onApply(finalText)
+            resetFocus()
+            removeAIBubble()
+        }
+
+        cancelButton?.setOnClickListener {
+            onCancel()
+            resetFocus()
+            removeAIBubble()
+        }
+
+        redoButton?.setOnClickListener {
+            val newPrompt = promptEditText?.text?.toString() ?: prompt
+            aiResultText?.text = "..." // show waiting indicator
+
+            // Call onRedo with the new prompt
+            onRedo(newPrompt)
+            resetFocus()
+        }        
+
+        // --- Make bubble draggable ---
+        bubbleView.setOnTouchListener(object : View.OnTouchListener {
+    private var initialX = 0
+    private var initialY = 0
+    private var initialTouchX = 0f
+    private var initialTouchY = 0f
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        if (event == null) return false
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                initialX = params.x
+                initialY = params.y
+                initialTouchX = event.rawX
+                initialTouchY = event.rawY
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                params.x = initialX + (event.rawX - initialTouchX).toInt()
+                params.y = initialY + (event.rawY - initialTouchY).toInt()
+                windowManager?.updateViewLayout(bubbleView, params)
+                return true
+            }
+        }
+        return false
+    }
+})
     }
 
     private suspend fun invokeSupabaseFunction(prompt: String, onDelta: suspend (String) -> Unit) = withContext(Dispatchers.IO) {
@@ -269,6 +710,9 @@ class FlowAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d(TAG, "FlowAccessibilityService onDestroy")
         serviceScope.cancel()
+        instance = null
+        removeAIBubble()
     }
 } 
