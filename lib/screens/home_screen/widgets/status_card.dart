@@ -9,6 +9,8 @@ Widget buildStatusCard({
   required AppLocalizations t,
   required bool isAccessibilityEnabled,
   required BuildContext context,
+  required bool hasOverlayPermission,
+  required VoidCallback onRequestOverlayPermission,
 }) {
   return Container(
     width: double.infinity,
@@ -97,6 +99,34 @@ Widget buildStatusCard({
             ),
           ),
         ),
+        if (isAccessibilityEnabled) ...[
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onRequestOverlayPermission,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: hasOverlayPermission
+                    ? const Color(0xFF4CAF50)
+                    : const Color(0xFFE94560),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              child: Text(
+                hasOverlayPermission
+                    ? 'Bubble Permission Granted ✓'
+                    : 'Grant Bubble Permission',
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
       ],
     ),
   );
