@@ -7,6 +7,7 @@ import 'package:flow_ai/screens/home_screen/cubit/home_screen_state.dart';
 import 'package:flow_ai/utils/accessibility_utils.dart';
 import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenCubit extends Cubit<GotHomeScreenData> {
@@ -14,9 +15,38 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
       : super(GotHomeScreenData(
           isAccessibilityEnabled: false,
           oemBrand: '',
+          hasOverlayPermission: false,
+          showOverlayDialog: false,
         ));
   String? prefixTrigger;
   String? suffixTrigger;
+
+  static const MethodChannel _channel = MethodChannel('flow_ai/platform');
+
+  Future<void> checkOverlayPermission(BuildContext context) async {
+    try {
+      final hasPermission =
+          await _channel.invokeMethod('checkOverlayPermission') ?? false;
+      emit(state.copyWith(
+        hasOverlayPermission: hasPermission,
+        showOverlayDialog: !hasPermission,
+      ));
+    } catch (_) {}
+  }
+
+  Future<void> requestOverlayPermission(BuildContext context) async {
+    try {
+      await _channel.invokeMethod('requestOverlayPermission');
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (context.mounted) {
+        await checkOverlayPermission(context);
+      }
+    } catch (_) {}
+  }
+
+  void dismissOverlayDialog() {
+    emit(state.copyWith(showOverlayDialog: false));
+  }
 
   Future<void> refreshStatus() async {
     final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();

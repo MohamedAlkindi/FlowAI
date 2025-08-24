@@ -72,5 +72,9 @@
   "cancel" : "الغاء",
   "save" : "حفظ",
   "done" : "تم!",
-"customize_triggers":"حدّث التفعيلات"
+  "customize_triggers":"حدّث التفعيلات",
+  "grantPermission":"تفعيل الامكانية",
+  "later":"ﻻحقاً",
+  "overlayDisplayPermissionTitle":"اذن العرض على تطفيقات أخرى 'اختياري'",
+  "overlayDisplayPermissionTest":"يحتاج تطبيق FlowAI الى اذن للعرض فوق التطبيقات الأخرى حتى نتمكن من عرض ميزة 'فقاعة الذكاء الاصطناعي'من الظهور عند استخدام التطبيق."
 }
