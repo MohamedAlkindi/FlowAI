@@ -23,10 +23,8 @@ Widget buildInstructionsCard({required AppLocalizations t}) {
         buildStepsWidget(t.t('1'), t.t('step_1_t'), t.t('step_1_d')),
         buildStepsWidget(t.t('2'), t.t('step_2_t'), t.t('step_2_d')),
         buildStepsWidget(t.t('3'), t.t('step_3_t'), t.t('step_3_d')),
-        buildStepsWidget('4', 'Grant Overlay Permission',
-            'Go to Settings > Apps > FlowAI > Permissions > Display over other apps and enable it. This allows the AI bubble to appear over other apps.'),
-        buildStepsWidget('5', 'Use the AI Bubble',
-            'Type your trigger (e.g., /ai your prompt /) in any app. The AI bubble will appear, showing your prompt, the AI result, and Apply/Cancel/Redo buttons.'),
+        buildStepsWidget(t.t('4'), t.t('step_4_t'), t.t('step_4_d')),
+        buildStepsWidget(t.t('5'), t.t('step_5_t'), t.t('step_5_d')),
       ],
     ),
   );

@@ -31,6 +31,10 @@
   "step_2_d": "FlowAI will stream the AI response in the text field",
   "step_3_t": "Continue typing",
   "step_3_d": "Seamlessly continue with your workflow",
+  "step_4_t": "Grant Overlay Permission 'Optional'",
+  "step_4_d": "Go to Settings > Apps > FlowAI > Permissions > Display over other apps and enable it. This allows the AI bubble to appear over other apps.",
+  "step_5_t": "Use the AI Bubble",
+  "step_5_d": "Type your trigger (e.g., /ai your prompt /) in any app. The AI bubble will appear, showing your prompt, the AI result, and Apply/Cancel/Redo buttons.",
   "open_settings": "Open Accessibility settings",
   "enter_prompt_first": "Enter a prompt first",
   "response_received": "Response received"
