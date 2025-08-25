@@ -103,9 +103,10 @@ https://github.com/user-attachments/assets/0291a027-9a8c-43b3-9189-8978a0d6c6d8
 ---
 
 ## 📸 لقطات الشاشة
-<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٠٤" src="https://github.com/user-attachments/assets/42a86a67-e44f-40a9-a46d-592970141e3e" />
-<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٢٣" src="https://github.com/user-attachments/assets/d55b9883-f8fc-47cb-a240-d8142bdd725a" />
-<img width="400" height="800" alt="SmartSelect_٢٠٢٥٠٨١٠_١٧٠٩٣٦" src="https://github.com/user-attachments/assets/60ee6bd3-0e97-4142-be2b-b95f590e6532" />
+<img width="400" height="800" alt="Screenshot_٢٠٢٥٠٨٢٥_١٩٤١٤٧" src="https://github.com/user-attachments/assets/9b405850-1542-4603-956d-a752bde64dc9" />
+<img width="400" height="800" alt="Screenshot_٢٠٢٥٠٨٢٥_١٩٤٣٠٧" src="https://github.com/user-attachments/assets/c1796744-1b12-4b7a-a39d-7bb2bf0fae61" />
+<img width="400" height="800" alt="Screenshot_٢٠٢٥٠٨٢٥_٢٠٠٠٤٠" src="https://github.com/user-attachments/assets/f0853278-1783-4c54-9634-589d0582c986" />
+<img width="400" height="800" alt="Screenshot_٢٠٢٥٠٨٢٥_٢٠٠٠٢٤" src="https://github.com/user-attachments/assets/1be5fee6-00ce-4a4e-b2c4-e72ad9e00de4" />
 
 ---
 
@@ -257,9 +258,10 @@ https://github.com/user-attachments/assets/fbe0a5b3-0d91-4363-a324-b19ee59ac06a
 ---
 
 ## 📸 Screenshots
-<img width="400" height="800" alt="SmartSelect_20250810_170035" src="https://github.com/user-attachments/assets/d696e763-7fe0-4e01-905b-a70f0ad8b245" />
-<img width="400" height="800" alt="SmartSelect_20250810_170255_1" src="https://github.com/user-attachments/assets/b12abce4-9b0b-40b1-8dd8-6434c68a8652" />
-<img width="400" height="800" alt="SmartSelect_20250810_170332" src="https://github.com/user-attachments/assets/49bf3595-614f-4302-b15e-54fb729f3adb" />
+<img width="400" height="800" alt="Screenshot_20250825_193644" src="https://github.com/user-attachments/assets/0f228f1a-5d52-45e6-bb77-39a26363e53b" />
+<img width="400" height="800" alt="Screenshot_20250825_193722" src="https://github.com/user-attachments/assets/3c21f6e7-fdfc-4aa7-810f-444a62bc343f" />
+<img width="400" height="800" alt="Screenshot_20250825_193652" src="https://github.com/user-attachments/assets/1a018131-2508-4490-912d-20555b4141b8" />
+<img width="400" height="800" alt="Screenshot_20250825_193734" src="https://github.com/user-attachments/assets/0a2bafd0-4efd-4366-b417-bbe8e17e060f" />
 
 ---
 
