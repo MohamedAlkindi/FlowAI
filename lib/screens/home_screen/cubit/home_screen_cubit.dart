@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/screens/home_screen/cubit/home_screen_state.dart';
+import 'package:flow_ai/services/preferences_service.dart';
 import 'package:flow_ai/utils/accessibility_utils.dart';
 import 'package:flow_ai/utils/trigger_util.dart';
 import 'package:flutter/material.dart';
@@ -45,13 +46,18 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
   }
 
   void dismissOverlayDialog() {
-    emit(state.copyWith(showOverlayDialog: false));
+    PreferencesService.markDialogDismissed();
+    emit(state.copyWith(showOverlayDialog: false, isDialogDismissed: true));
   }
 
-  Future<void> refreshStatus() async {
-    final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();
+  Future<void> refreshStatus(BuildContext context) async {
+    final isAccessibilityEnabled =
+        await AccessibilityUtils.isAccessibilityServiceEnabled();
+    if (context.mounted) {
+      checkOverlayPermission(context);
+    }
     emit(
-      state.copyWith(isAccessibilityEnabled: enabled),
+      state.copyWith(isAccessibilityEnabled: isAccessibilityEnabled),
     );
   }
 
@@ -87,7 +93,9 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
 
   Future<void> initMethods(BuildContext context) async {
     await getTriggers(context);
-    await refreshStatus();
+    if (context.mounted) {
+      await refreshStatus(context);
+    }
     await loadOemBrand();
   }
 }

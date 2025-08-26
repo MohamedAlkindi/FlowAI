@@ -14,7 +14,7 @@
   "status_active": "Service Active",
   "status_inactive": "Service Inactive",
   "status_ready": "FlowAI is ready to assist you",
-  "status_enable": "Enable accessibility service to start using AI features, click the refresh button above to refresh",
+  "status_enable": "Enable accessibility service to start using AI features, swipe down to refresh",
   "status_refreshed": "Status refreshed",
   "accessibility": "Accessibility Service",
   "accessibility_desc": "This service monitors text input fields to detect /ai commands and provide AI-powered text generation.",
@@ -79,6 +79,6 @@
   "customize_triggers":"Customize Triggers",
   "grantPermission":"Grant Permission",
   "later":"Later",
-  "overlayDisplayPermissionTitle":"Overlay Permission Required 'Optional'",
+  "overlayDisplayPermissionTitle":"Overlay Permission 'Optional'",
   "overlayDisplayPermissionText":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app"
 }

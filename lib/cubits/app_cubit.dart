@@ -77,4 +77,18 @@ class AppCubit extends Cubit<AppState> {
     }
     return false;
   }
+
+  Future<void> markDialogDismissed() async {
+    try {
+      await PreferencesService.markDialogDismissed();
+      final currentState = state;
+      if (currentState is AppLoaded) {
+        final updatedPreferences =
+            currentState.preferences.copyWith(isDialogDismissed: true);
+        emit(AppLoaded(updatedPreferences));
+      }
+    } catch (e) {
+      emit(AppError(e.toString()));
+    }
+  }
 }
