@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          homeScreenCubit.refreshStatus();
+          homeScreenCubit.refreshStatus(context);
           if (context.mounted) {
             showSnackBar(
               t.t("status_refreshed"),

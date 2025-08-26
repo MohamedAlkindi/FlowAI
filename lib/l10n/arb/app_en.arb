@@ -79,6 +79,6 @@
   "customize_triggers":"Customize Triggers",
   "grantPermission":"Grant Permission",
   "later":"Later",
-  "overlayDisplayPermissionTitle":"Overlay Permission Required 'Optional'",
+  "overlayDisplayPermissionTitle":"Overlay Permission 'Optional'",
   "overlayDisplayPermissionText":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app"
 }

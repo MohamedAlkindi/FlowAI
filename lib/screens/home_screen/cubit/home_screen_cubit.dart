@@ -48,10 +48,14 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
     emit(state.copyWith(showOverlayDialog: false));
   }
 
-  Future<void> refreshStatus() async {
-    final enabled = await AccessibilityUtils.isAccessibilityServiceEnabled();
+  Future<void> refreshStatus(BuildContext context) async {
+    final isAccessibilityEnabled =
+        await AccessibilityUtils.isAccessibilityServiceEnabled();
+    if (context.mounted) {
+      checkOverlayPermission(context);
+    }
     emit(
-      state.copyWith(isAccessibilityEnabled: enabled),
+      state.copyWith(isAccessibilityEnabled: isAccessibilityEnabled),
     );
   }
 
@@ -87,7 +91,9 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
 
   Future<void> initMethods(BuildContext context) async {
     await getTriggers(context);
-    await refreshStatus();
+    if (context.mounted) {
+      await refreshStatus(context);
+    }
     await loadOemBrand();
   }
 }
