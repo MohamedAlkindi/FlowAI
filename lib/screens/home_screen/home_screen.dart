@@ -46,20 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
-          // Refersh button.
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () async {
-              await homeScreenCubit.refreshStatus();
-              if (context.mounted) {
-                showSnackBar(
-                  t.t("status_refreshed"),
-                  context: context,
-                );
-              }
-            },
-            tooltip: t.t('refresh_status'),
-          ),
           // Settings button
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
@@ -80,44 +66,55 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildStatusCard(
-                      t: t,
-                      isAccessibilityEnabled: state.isAccessibilityEnabled,
-                      context: context,
-                      hasOverlayPermission: state.hasOverlayPermission,
-                      onRequestOverlayPermission: () =>
-                          homeScreenCubit.requestOverlayPermission(context),
-                    ),
-                    const SizedBox(height: 24),
-                    buildOemInstructionsCard(
-                      t: t,
-                      oemBrand: state.oemBrand,
-                    ),
-                    const SizedBox(height: 24),
-                    buildInstructionsCard(t: t),
-                    const SizedBox(height: 24),
-                    buildTroubleshootingCard(t: t),
-                  ],
-                ),
-              ),
-              if (state.showOverlayDialog)
-                OverlayPermissionDialog(
-                  onGrant: () =>
-                      homeScreenCubit.requestOverlayPermission(context),
-                  onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
-                ),
-            ],
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          homeScreenCubit.refreshStatus();
+          if (context.mounted) {
+            showSnackBar(
+              t.t("status_refreshed"),
+              context: context,
+            );
+          }
         },
+        child: BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
+          builder: (context, state) {
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildStatusCard(
+                        t: t,
+                        isAccessibilityEnabled: state.isAccessibilityEnabled,
+                        context: context,
+                        hasOverlayPermission: state.hasOverlayPermission,
+                        onRequestOverlayPermission: () =>
+                            homeScreenCubit.requestOverlayPermission(context),
+                      ),
+                      const SizedBox(height: 24),
+                      buildOemInstructionsCard(
+                        t: t,
+                        oemBrand: state.oemBrand,
+                      ),
+                      const SizedBox(height: 24),
+                      buildInstructionsCard(t: t),
+                      const SizedBox(height: 24),
+                      buildTroubleshootingCard(t: t),
+                    ],
+                  ),
+                ),
+                if (state.showOverlayDialog)
+                  OverlayPermissionDialog(
+                    onGrant: () =>
+                        homeScreenCubit.requestOverlayPermission(context),
+                    onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

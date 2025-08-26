@@ -13,10 +13,15 @@ class AccessibilityUtils {
     }
   }
 
-  static Future<void> openAccessibilitySettings() async {
+  static Future<bool> openAccessibilitySettings() async {
     try {
       await _channel.invokeMethod('openAccessibilitySettings');
-    } catch (_) {}
+      await Future.delayed(const Duration(milliseconds: 1000));
+      bool isEnabled = await isAccessibilityServiceEnabled();
+      return isEnabled;
+    } catch (_) {
+      return false;
+    }
   }
 
   static String getAccessibilityServiceName() {
