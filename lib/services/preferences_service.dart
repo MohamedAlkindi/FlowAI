@@ -51,4 +51,10 @@ class PreferencesService {
     );
     await saveUserPreferences(updatedTriggers);
   }
+
+  static Future<void> markDialogDismissed() async {
+    final preferences = await getUserPreferences();
+    final updatedPreferences = preferences.copyWith(isDialogDismissed: true);
+    await saveUserPreferences(updatedPreferences);
+  }
 }

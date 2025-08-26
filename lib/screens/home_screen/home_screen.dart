@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                if (state.showOverlayDialog)
+                if (state.showOverlayDialog && !state.isDialogDismissed)
                   OverlayPermissionDialog(
                     onGrant: () =>
                         homeScreenCubit.requestOverlayPermission(context),
