@@ -20,16 +20,16 @@ jobs:
         run: flutter pub get
 
       - name: Decode keystore
-        run: echo "$KEYSTORE_BASE64" | base64 --decode > android/app/flowai-release-key.jks
+        run: echo "$KEYSTORE_BASE64" | base64 --decode > flowai-release-key.jks
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
       - name: Create key.properties
         run: |
-          echo "storePassword=${{ secrets.STORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=flowai-release-key.jks" >> android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" > key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> key.properties
+          echo "storeFile=flowai-release-key.jks" >> key.properties
 
       - name: Build release APK
         run: flutter build apk --release --split-per-abi
