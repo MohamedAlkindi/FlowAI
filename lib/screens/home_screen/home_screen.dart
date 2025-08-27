@@ -9,6 +9,7 @@ import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:ui';
 
 import '../../l10n/l10n.dart';
 import 'package:flow_ai/utils/overlay_dialog.dart';
@@ -105,12 +106,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                if (state.showOverlayDialog && !state.isDialogDismissed)
-                  OverlayPermissionDialog(
-                    onGrant: () =>
-                        homeScreenCubit.requestOverlayPermission(context),
-                    onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
+                if (state.showOverlayDialog && !state.isDialogDismissed) ...[
+                  Positioned.fill(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.2),
+                      ),
+                    ),
                   ),
+                  const ModalBarrier(
+                    dismissible: false,
+                    color: Colors.black45,
+                  ),
+                  Center(
+                    child: OverlayPermissionDialog(
+                      onGrant: () =>
+                          homeScreenCubit.requestOverlayPermission(context),
+                      onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
+                    ),
+                  ),
+                ],
               ],
             );
           },
