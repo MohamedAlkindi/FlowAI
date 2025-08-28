@@ -1,39 +1,56 @@
 name: Build Flutter APK
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      RELEASE_STORE_FILE: flowai-release-key.jks
+      RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      RELEASE_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
     steps:
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.4'
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # 4️⃣ Decode keystore
       - name: Decode keystore
-        run: echo "$KEYSTORE_BASE64" | base64 --decode > flowai-release-key.jks
+        run: echo "$KEYSTORE_BASE64" | base64 --decode > android/app/flowai-release-key.jks
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
-      - name: Create key.properties
+      # 5️⃣ Debug: verify keystore exists
+      - name: Verify keystore
         run: |
-          echo "storePassword=${{ secrets.STORE_PASSWORD }}" > key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> key.properties
-          echo "storeFile=flowai-release-key.jks" >> key.properties
+          echo "Listing android/app folder:"
+          ls -l android/app/
+          echo "Keystore size (bytes):"
+          stat android/app/flowai-release-key.jks || echo "Keystore missing"
 
+      # 6️⃣ Clean previous builds
+      - name: Clean Flutter build
+        run: flutter clean
+
+      # 7️⃣ Build release APK
       - name: Build release APK
         run: flutter build apk --release --split-per-abi
 
+      # 8️⃣ Upload APK artifacts
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
