@@ -79,8 +79,8 @@ Widget buildStatusCard({
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: isAccessibilityEnabled
-                  ? const Color(0xFFE94560)
-                  : const Color(0xFF4CAF50),
+                  ? const Color(0xFF4CAF50)
+                  : const Color(0xFFE94560),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -117,8 +117,8 @@ Widget buildStatusCard({
               ),
               child: Text(
                 hasOverlayPermission
-                    ? 'Bubble Permission Granted ✓'
-                    : 'Grant Bubble Permission',
+                    ? t.t("permissionGranted")
+                    : t.t("grantBubblePermission"),
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,

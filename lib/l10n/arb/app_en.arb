@@ -18,7 +18,7 @@
   "status_refreshed": "Status refreshed",
   "accessibility": "Accessibility Service",
   "accessibility_desc": "This service monitors text input fields to detect /ai commands and provide AI-powered text generation.",
-  "manage_in_settings": "Manage in Settings",
+  "manage_in_settings": "Service is Enabled️ ✓",
   "enable_service": "Enable Service",
   "edge_function_test": "Edge Function Test",
   "prompt_hint": "Enter a prompt to send to Edge Function",
@@ -80,5 +80,7 @@
   "grantPermission":"Grant Permission",
   "later":"Later",
   "overlayDisplayPermissionTitle":"Overlay Permission 'Optional'",
-  "overlayDisplayPermissionText":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app"
+  "overlayDisplayPermissionText":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app",
+  "permissionGranted":"Bubble Permission Granted ✓",
+  "grantBubblePermission":"Grant Bubble Permission"
 }
