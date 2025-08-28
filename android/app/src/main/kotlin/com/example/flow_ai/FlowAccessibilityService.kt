@@ -323,6 +323,8 @@ class FlowAccessibilityService : AccessibilityService() {
                                                     if (bubbleView != null) {
                                                         val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
                                                         aiResultText?.text = newDelta
+                                                        val aiResultScroll = bubbleView.findViewById<android.widget.ScrollView>(R.id.aiResultScrollView)
+                                                        aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
                                                     }
                                                 }
                                             }
@@ -332,6 +334,8 @@ class FlowAccessibilityService : AccessibilityService() {
                                                 if (bubbleView != null) {
                                                     val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
                                                     aiResultText?.text = "Error: ${e.message}"
+                                                    val aiResultScroll = bubbleView.findViewById<android.widget.ScrollView>(R.id.aiResultScrollView)
+                                                    aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
                                                 }
                                             }
                                         }
@@ -382,6 +386,8 @@ class FlowAccessibilityService : AccessibilityService() {
                                                 val bubbleView = aiBubbleView
                                                 val aiResultText = bubbleView?.findViewById<TextView>(R.id.aiResultText)
                                                 aiResultText?.text = newDelta
+                                                val aiResultScroll = bubbleView?.findViewById<android.widget.ScrollView>(R.id.aiResultScrollView)
+                                                aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
                                             }
                                         }
                                     } catch (e: Exception) {
@@ -389,6 +395,8 @@ class FlowAccessibilityService : AccessibilityService() {
                                             val bubbleView = aiBubbleView
                                             val aiResultText = bubbleView?.findViewById<TextView>(R.id.aiResultText)
                                             aiResultText?.text = "Error: ${e.message}"
+                                            val aiResultScroll = bubbleView?.findViewById<android.widget.ScrollView>(R.id.aiResultScrollView)
+                                            aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
                                         }
                                     }
                                 }
@@ -477,12 +485,14 @@ class FlowAccessibilityService : AccessibilityService() {
 
         val promptEditText = bubbleView.findViewById<EditText>(R.id.promptEditText)
         val aiResultText = bubbleView.findViewById<TextView>(R.id.aiResultText)
+        val aiResultScroll = bubbleView.findViewById<android.widget.ScrollView>(R.id.aiResultScrollView)
         val applyButton = bubbleView.findViewById<Button>(R.id.applyButton)
         val cancelButton = bubbleView.findViewById<Button>(R.id.cancelButton)
         val redoButton = bubbleView.findViewById<Button>(R.id.redoButton)
 
         promptEditText?.setText(prompt)
         aiResultText?.text = aiText
+        aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
 
         // --- Focus handling: start as NOT_FOCUSABLE ---
         val params = WindowManager.LayoutParams().apply {
@@ -569,6 +579,7 @@ class FlowAccessibilityService : AccessibilityService() {
         redoButton?.setOnClickListener {
             val newPrompt = promptEditText?.text?.toString() ?: prompt
             aiResultText?.text = "..." // show waiting indicator
+            aiResultScroll?.post { aiResultScroll.fullScroll(View.FOCUS_DOWN) }
 
             // Call onRedo with the new prompt
             onRedo(newPrompt)
