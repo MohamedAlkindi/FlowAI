@@ -13,7 +13,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.flow_ai"
-    compileSdk = 34
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -27,7 +27,7 @@ android {
     defaultConfig {
         applicationId = "ai.flow.app"
         minSdkVersion flutter.minSdkVersion
-        targetSdk = 34
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
