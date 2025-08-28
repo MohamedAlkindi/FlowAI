@@ -12,7 +12,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.flowai"
+    namespace = "com.example.flow_ai"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
     compileOptions {
