@@ -106,7 +106,8 @@ https://github.com/user-attachments/assets/0291a027-9a8c-43b3-9189-8978a0d6c6d8
 <img width="400" height="800" alt="SmartSelect_20250828_140039_Chrome" src="https://github.com/user-attachments/assets/4fea9ec4-eb41-4ded-b1d3-d81edce57a90" />
 <img width="400" height="800" alt="SmartSelect_20250828_140110_Chrome" src="https://github.com/user-attachments/assets/80093323-a0aa-4ef5-8db0-589276ad8797" />
 <img width="400" height="800" alt="SmartSelect_20250828_140142_Chrome" src="https://github.com/user-attachments/assets/13394973-490d-44c6-85de-138c993612e9" />
-<img width="400" height="800" alt="SmartSelect_20250828_140624_Chrome" src="https://github.com/user-attachments/assets/61789923-a027-4a31-bd88-0b9be7469060" />
+<img width="400" height="800" alt="SmartSelect_20250828_142630_Chrome" src="https://github.com/user-attachments/assets/9e80d897-6c8b-492b-9c8c-74b5ef1d5334" />
+
 
 
 
