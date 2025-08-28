@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RELEASE_STORE_FILE: android/app/flowai-release-key.jks
+      RELEASE_STORE_FILE: flowai-release-key.jks
       RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       RELEASE_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
       RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
