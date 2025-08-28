@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -52,13 +53,14 @@
         android:textStyle="bold"
         android:layout_marginBottom="8dp" />
 
-    <ScrollView
+    <com.example.flow_ai.MaxHeightScrollView
         android:id="@+id/aiResultScrollView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         android:layout_marginBottom="16dp"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        app:maxHeight="240dp">
 
         <TextView
             android:id="@+id/aiResultText"
@@ -71,7 +73,7 @@
             android:minHeight="48dp"
             android:gravity="top|start"
             android:text="..." />
-    </ScrollView>
+    </com.example.flow_ai.MaxHeightScrollView>
 
     <!-- Buttons Section -->
     <LinearLayout
