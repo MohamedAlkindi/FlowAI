@@ -67,69 +67,71 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          homeScreenCubit.refreshStatus(context);
-          if (context.mounted) {
-            showSnackBar(
-              t.t("status_refreshed"),
-              context: context,
-            );
-          }
-        },
-        child: BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
-          builder: (context, state) {
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildStatusCard(
-                        t: t,
-                        isAccessibilityEnabled: state.isAccessibilityEnabled,
-                        context: context,
-                        hasOverlayPermission: state.hasOverlayPermission,
-                        onRequestOverlayPermission: () =>
-                            homeScreenCubit.requestOverlayPermission(context),
-                      ),
-                      const SizedBox(height: 24),
-                      buildOemInstructionsCard(
-                        t: t,
-                        oemBrand: state.oemBrand,
-                      ),
-                      const SizedBox(height: 24),
-                      buildInstructionsCard(t: t),
-                      const SizedBox(height: 24),
-                      buildTroubleshootingCard(t: t),
-                    ],
-                  ),
-                ),
-                if (state.showOverlayDialog && !state.isDialogDismissed) ...[
-                  Positioned.fill(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                      child: Container(
-                        color: Colors.black.withValues(alpha: 0.2),
-                      ),
-                    ),
-                  ),
-                  const ModalBarrier(
-                    dismissible: false,
-                    color: Colors.black45,
-                  ),
-                  Center(
-                    child: OverlayPermissionDialog(
-                      onGrant: () =>
-                          homeScreenCubit.requestOverlayPermission(context),
-                      onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
-                    ),
-                  ),
-                ],
-              ],
-            );
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            homeScreenCubit.refreshStatus(context);
+            if (context.mounted) {
+              showSnackBar(
+                t.t("status_refreshed"),
+                context: context,
+              );
+            }
           },
+          child: BlocBuilder<HomeScreenCubit, GotHomeScreenData>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildStatusCard(
+                          t: t,
+                          isAccessibilityEnabled: state.isAccessibilityEnabled,
+                          context: context,
+                          hasOverlayPermission: state.hasOverlayPermission,
+                          onRequestOverlayPermission: () =>
+                              homeScreenCubit.requestOverlayPermission(context),
+                        ),
+                        const SizedBox(height: 24),
+                        buildOemInstructionsCard(
+                          t: t,
+                          oemBrand: state.oemBrand,
+                        ),
+                        const SizedBox(height: 24),
+                        buildInstructionsCard(t: t),
+                        const SizedBox(height: 24),
+                        buildTroubleshootingCard(t: t),
+                      ],
+                    ),
+                  ),
+                  if (state.showOverlayDialog && !state.isDialogDismissed) ...[
+                    Positioned.fill(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                        child: Container(
+                          color: Colors.black.withValues(alpha: 0.2),
+                        ),
+                      ),
+                    ),
+                    const ModalBarrier(
+                      dismissible: false,
+                      color: Colors.black45,
+                    ),
+                    Center(
+                      child: OverlayPermissionDialog(
+                        onGrant: () =>
+                            homeScreenCubit.requestOverlayPermission(context),
+                        onDismiss: () => homeScreenCubit.dismissOverlayDialog(),
+                      ),
+                    ),
+                  ],
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
