@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">خدمة FlowAI للمساعدة في الوصول تراقب حقول إدخال النص لاكتشاف أوامر /ai وتوفير توليد نص مدعوم بالذكاء الاصطناعي.</string>
+    
+    <!-- AI Bubble Button Texts -->
+    <string name="button_apply">تطبيق</string>
+    <string name="button_cancel">إلغاء</string>
+    <string name="button_redo">إعادة</string>
+</resources>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="accessibility_service_description">FlowAI accessibility service monitors text input fields to detect /ai commands and provide AI-powered text generation.</string>
+    
+    <!-- AI Bubble Button Texts -->
+    <string name="button_apply">Apply</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_redo">Redo</string>
 </resources> 
