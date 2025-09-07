@@ -1,7 +1,7 @@
 <!-- Amazing Bilingual Header -->
 <div align="center">
 
-# ✨️ FlowAI – AI Anywhere You Type! / الذكاء الاصطناعي أينما كتبت!  
+## ✨️ FlowAI – AI Anywhere You Type! / !الذكاء الاصطناعي أينما كتبت  
 
 *Write smarter, faster, and seamlessly with AI integrated directly into your Android keyboard.*  
 *اكتب بشكل أذكى وأسرع وبسلاسة مع الذكاء الاصطناعي مدمج مباشرة في لوحة مفاتيح أندرويد.*
