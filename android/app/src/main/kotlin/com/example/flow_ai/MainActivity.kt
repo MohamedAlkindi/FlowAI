@@ -10,6 +10,7 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import com.example.flow_ai.FlowAccessibilityService
+import com.example.flow_ai.models.TriggerConfig
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "flow_ai/platform"
@@ -32,8 +33,8 @@ class MainActivity: FlutterActivity() {
                     val newStart = call.argument<String>("startTrigger")
                     val newEnd = call.argument<String>("endTrigger")
 
-                    if (!newStart.isNullOrEmpty()) FlowAccessibilityService.aiTrigger = newStart
-                    if (!newEnd.isNullOrEmpty()) FlowAccessibilityService.endTrigger = newEnd
+                    if (!newStart.isNullOrEmpty()) FlowAccessibilityService.triggerConfig.aiTrigger = newStart
+                    if (!newEnd.isNullOrEmpty()) FlowAccessibilityService.triggerConfig.endTrigger = newEnd
                     result.success(null)
                 }
                 "checkOverlayPermission" -> {
