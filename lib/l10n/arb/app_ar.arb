@@ -18,7 +18,7 @@
   "status_refreshed": "حدّث الحالة",
   "accessibility": "خدمة تسهيلات الاستخدام",
   "accessibility_desc": "تراقب هذه الخدمة حقول الإدخال لاكتشاف أوامر /ai وتوفير توليد النصوص بالذكاء الاصطناعي.",
-  "manage_in_settings": الخدمة مُفعّلة",
+  "manage_in_settings": "الخدمة مُفعّلة",
   "enable_service": "تفعيل الخدمة",
   "edge_function_test": "اختبار وظيفة الحافة",
   "prompt_hint": "أدخل طلبًا لإرساله إلى وظيفة الحافة",
