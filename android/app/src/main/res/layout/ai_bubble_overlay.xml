@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI Prompt:"
+        android:text="@string/ai_bubble_prompt"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:padding="12dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#CCCCCC"
-        android:hint="Enter your prompt..."
+        android:hint="@string/ai_bubble_prompt_hint"
         android:textSize="14sp"
         android:minHeight="48dp"
         android:maxHeight="100dp"
@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI Response:"
+        android:text="@string/ai_bubble_result"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"

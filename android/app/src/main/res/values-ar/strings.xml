@@ -6,4 +6,7 @@
     <string name="button_apply">تطبيق</string>
     <string name="button_cancel">إلغاء</string>
     <string name="button_redo">إعادة</string>
+    <string name="ai_bubble_prompt">النص المُدخل:</string>
+    <string name="ai_bubble_result">النتيجة:</string>
+    <string name="ai_bubble_prompt_hint">أدخل النص هنا...</string>
 </resources>
