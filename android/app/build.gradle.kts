@@ -89,3 +89,25 @@ dependencies {
 flutter {
     source = "../.."
 }
+
+tasks.register<Copy>("copyApkToFlutterOutput") {
+    val buildType = project.findProperty("buildType") ?: "debug"
+    val apkName = if (buildType == "release") "app-release.apk" else "app-debug.apk"
+    val src = file("build/outputs/apk/$buildType/$apkName")
+    val dest = file("../../build/app/outputs/flutter-apk/$apkName")
+    from(src)
+    into(dest.parentFile)
+    rename { apkName }
+    doFirst {
+        if (!src.exists()) {
+            throw GradleException("APK not found at $src. Build the APK first.")
+        }
+        dest.parentFile.mkdirs()
+    }
+}
+
+tasks.whenTaskAdded {
+    if (name == "assembleDebug" || name == "assembleRelease") {
+        finalizedBy("copyApkToFlutterOutput")
+    }
+}
