@@ -48,3 +48,6 @@ flowai-release-key.jks.base64
 key.properties
 android/app/build.gradle
 pubspec.lock
+.vscode/launch.json
+android/app/build
+pubspec.lock
