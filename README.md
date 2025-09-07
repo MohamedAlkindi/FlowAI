@@ -1,10 +1,16 @@
-
-<!-- Language Tabs -->
+<!-- Amazing Bilingual Header -->
 <div align="center">
-  
+
+# ✨️ FlowAI – AI Anywhere You Type! / الذكاء الاصطناعي أينما كتبت!  
+
+*Write smarter, faster, and seamlessly with AI integrated directly into your Android keyboard.*  
+*اكتب بشكل أذكى وأسرع وبسلاسة مع الذكاء الاصطناعي مدمج مباشرة في لوحة مفاتيح أندرويد.*
+
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-  <a href="#arabic"><img src="https://img.shields.io/badge/العربية-🇦🇪-green?style=for-the-badge" alt="Arabic"></a>
-  <a href="#english"><img src="https://img.shields.io/badge/English-🇺🇸-blue?style=for-the-badge" alt="English"></a>
+
+<a href="#arabic"><img src="https://img.shields.io/badge/العربية-🇦🇪-green?style=for-the-badge" alt="Arabic"></a>  
+<a href="#english"><img src="https://img.shields.io/badge/English-🇺🇸-blue?style=for-the-badge" alt="English"></a>  
+
 </div>
 
 ---
