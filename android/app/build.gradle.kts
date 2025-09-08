@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.flow_ai"
-    compileSdk = 34
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
 
     compileOptions {
@@ -27,7 +27,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = 34
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         val props = Properties()
@@ -82,7 +82,17 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    splits {
+        abi {
+            enable true            
+            reset()            
+            include 'armeabi-v7a','arm64-v8a','x86_64'            
+            universalApk false        
+        }    
+    }    
 }
+
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
 }
