@@ -69,7 +69,7 @@
   ,
   "oem_unknown_hint": "Please search online for how to enable restricted settings, disable battery optimization, and keep accessibility services running for your specific device/OS version.",
   "setCustomTrigger": "Set Custom Trigger",
-  "currentSettings": "Current Settings",
+  "currentSettings": "Current Trigger Settings",
   "text": "prompt here",
   "startTrigger" : "Start Trigger",
   "endTrigger" : "End Trigger",
@@ -83,4 +83,9 @@
   "overlayDisplayPermissionText":"FlowAI needs permission to display over other apps so the AI bubble can appear when you use the trigger in any app",
   "permissionGranted":"Bubble Permission Granted ✓",
   "grantBubblePermission":"Grant Bubble Permission"
+  ,
+  "choose_language_title": "Choose your language",
+  "language_english": "English",
+  "language_arabic": "العربية",
+  "settings_title":"Settings"
 }

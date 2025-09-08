@@ -4,6 +4,7 @@ class UserPreferences {
   final bool isDialogDismissed;
   final String triggerPrefix;
   final String triggerSuffix;
+  final String? localeCode;
 
   UserPreferences({
     this.isFirstLaunch = true,
@@ -11,6 +12,7 @@ class UserPreferences {
     this.isDialogDismissed = false,
     this.triggerPrefix = '/ai',
     this.triggerSuffix = "/",
+    this.localeCode,
   });
 
   UserPreferences copyWith({
@@ -19,6 +21,7 @@ class UserPreferences {
     bool? isDialogDismissed,
     String? triggerPrefix,
     String? triggerSuffix,
+    String? localeCode,
   }) {
     return UserPreferences(
       isFirstLaunch: isFirstLaunch ?? this.isFirstLaunch,
@@ -27,6 +30,7 @@ class UserPreferences {
       isDialogDismissed: isDialogDismissed ?? this.isDialogDismissed,
       triggerPrefix: triggerPrefix ?? this.triggerPrefix,
       triggerSuffix: triggerSuffix ?? this.triggerSuffix,
+      localeCode: localeCode ?? this.localeCode,
     );
   }
 
@@ -37,6 +41,7 @@ class UserPreferences {
       'isDialogDismissed': isDialogDismissed,
       'triggerPrefix': triggerPrefix,
       "triggerSuffix": triggerSuffix,
+      'localeCode': localeCode,
     };
   }
 
@@ -47,6 +52,7 @@ class UserPreferences {
       isDialogDismissed: json['isDialogDismissed'] ?? false,
       triggerPrefix: json['triggerPrefix'] ?? '/ai',
       triggerSuffix: json['triggerSuffix'] ?? '/',
+      localeCode: json['localeCode'],
     );
   }
 }

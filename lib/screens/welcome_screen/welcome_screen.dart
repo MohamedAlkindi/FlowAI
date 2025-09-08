@@ -1,5 +1,6 @@
 import 'package:flow_ai/screens/welcome_screen/widgets/buttom_section.dart';
 import 'package:flow_ai/screens/welcome_screen/widgets/page_widget.dart';
+import 'package:flow_ai/screens/welcome_screen/widgets/language_selection.dart';
 import 'package:flutter/material.dart';
 
 import '../../l10n/l10n.dart';
@@ -19,6 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final pages = [
+      {'custom': 'language', 'title': '', 'subtitle': '', 'icon': ''},
       {
         'title': t.t('welcome_title_1'),
         'subtitle': t.t('welcome_sub_1'),
@@ -51,7 +53,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 },
                 itemCount: pages.length,
                 itemBuilder: (context, index) {
-                  return buildPage(page: pages[index]);
+                  final page = pages[index];
+                  if (page['custom'] == 'language') {
+                    return const LanguageSelection();
+                  }
+                  return buildPage(page: page);
                 },
               ),
             ),

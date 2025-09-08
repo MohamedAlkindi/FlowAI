@@ -69,7 +69,7 @@
   ,
   "oem_unknown_hint": "الرجاء البحث على الإنترنت عن كيفية تفعيل الإعدادات المقيّدة، تعطيل تحسين البطارية، والحفاظ على خدمات تسهيلات الاستخدام فعّالة لجهازك وإصدار النظام.",
   "setCustomTrigger": "تغيير الاعدادات الافتراضية",
-  "currentSettings":"الاعدادات الحالية",
+  "currentSettings":"اعدادات التفعيل الحالية",
   "text":"اكتب طلبك هنا",
   "startTrigger" : "بدء التفعيل",
   "endTrigger" : "انهاء التفعيل",
@@ -80,7 +80,12 @@
   "grantPermission":"تفعيل الامكانية",
   "later":"ﻻحقاً",
   "overlayDisplayPermissionTitle":"اذن العرض على تطفيقات أخرى 'اختياري'",
-  "overlayDisplayPermissionTest":"يحتاج تطبيق FlowAI الى اذن للعرض فوق التطبيقات الأخرى حتى نتمكن من عرض ميزة 'فقاعة الذكاء الاصطناعي'من الظهور عند استخدام التطبيق.",
+  "overlayDisplayPermissionText":"يحتاج تطبيق FlowAI الى اذن للعرض فوق التطبيقات الأخرى حتى نتمكن من عرض ميزة 'فقاعة الذكاء الاصطناعي'من الظهور عند استخدام التطبيق.",
   "permissionGranted":"✓ تم تفعيل اذن الفقاعة",
   "grantBubblePermission":"اعطاء الاذن للفقاعة"
+  ,
+  "choose_language_title": "اختر لغتك",
+  "language_english": "English",
+  "language_arabic": "العربية",
+  "settings_title":"الاعدادات"
 }
