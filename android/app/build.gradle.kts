@@ -100,24 +100,25 @@ flutter {
     source = "../.."
 }
 
-tasks.register<Copy>("copyApkToFlutterOutput") {
-    val buildType = project.findProperty("buildType") ?: "debug"
-    val apkName = if (buildType == "release") "app-release.apk" else "app-debug.apk"
-    val src = file("build/outputs/apk/$buildType/$apkName")
-    val dest = file("../../build/app/outputs/flutter-apk/$apkName")
-    from(src)
-    into(dest.parentFile)
-    rename { apkName }
+tasks.register<Copy>("copyApksToFlutterOutput") {
+    val flutterOutputDir = file("../../build/app/outputs/flutter-apk")
+    val apkDir = file("build/outputs/flutter-apk")
+
+    from(apkDir)
+    include("*.apk") // include all APKs (split or universal)
+    into(flutterOutputDir)
+
     doFirst {
-        if (!src.exists()) {
-            throw GradleException("APK not found at $src. Build the APK first.")
+        if (!apkDir.exists() || apkDir.listFiles()?.isEmpty() != false) {
+            throw GradleException("No APKs found in $apkDir. Build the APKs first.")
         }
-        dest.parentFile.mkdirs()
+        flutterOutputDir.mkdirs()
     }
 }
 
+// Ensure it runs after assemble tasks
 tasks.whenTaskAdded {
     if (name == "assembleDebug" || name == "assembleRelease") {
-        finalizedBy("copyApkToFlutterOutput")
+        finalizedBy("copyApksToFlutterOutput")
     }
 }
