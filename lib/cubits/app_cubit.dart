@@ -22,8 +22,9 @@ class AppCubit extends Cubit<AppState> {
       await PreferencesService.updateAccessibilityStatus(isEnabled);
       final currentState = state;
       if (currentState is AppLoaded) {
-        final updatedPreferences = currentState.preferences
-            .copyWith(isAccessibilityEnabled: isEnabled);
+        final updatedPreferences = currentState.preferences.copyWith(
+          isAccessibilityEnabled: isEnabled,
+        );
         emit(AppLoaded(updatedPreferences));
       }
     } catch (e) {
@@ -36,8 +37,9 @@ class AppCubit extends Cubit<AppState> {
       await PreferencesService.markFirstLaunchComplete();
       final currentState = state;
       if (currentState is AppLoaded) {
-        final updatedPreferences =
-            currentState.preferences.copyWith(isFirstLaunch: false);
+        final updatedPreferences = currentState.preferences.copyWith(
+          isFirstLaunch: false,
+        );
         emit(AppLoaded(updatedPreferences));
       }
     } catch (e) {
@@ -46,7 +48,9 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> saveUserTriggers(
-      String? prefixTrigger, String? suffixTrigger) async {
+    String? prefixTrigger,
+    String? suffixTrigger,
+  ) async {
     try {
       await PreferencesService.saveUserTriggers(prefixTrigger, suffixTrigger);
       final currentState = state;
@@ -54,6 +58,21 @@ class AppCubit extends Cubit<AppState> {
         final updatedPreferences = currentState.preferences.copyWith(
           triggerPrefix: prefixTrigger,
           triggerSuffix: suffixTrigger,
+        );
+        emit(AppLoaded(updatedPreferences));
+      }
+    } catch (e) {
+      emit(AppError(e.toString()));
+    }
+  }
+
+  Future<void> setLocale(String? localeCode) async {
+    try {
+      await PreferencesService.setLocaleCode(localeCode);
+      final currentState = state;
+      if (currentState is AppLoaded) {
+        final updatedPreferences = currentState.preferences.copyWith(
+          localeCode: localeCode,
         );
         emit(AppLoaded(updatedPreferences));
       }
@@ -83,8 +102,9 @@ class AppCubit extends Cubit<AppState> {
       await PreferencesService.markDialogDismissed();
       final currentState = state;
       if (currentState is AppLoaded) {
-        final updatedPreferences =
-            currentState.preferences.copyWith(isDialogDismissed: true);
+        final updatedPreferences = currentState.preferences.copyWith(
+          isDialogDismissed: true,
+        );
         emit(AppLoaded(updatedPreferences));
       }
     } catch (e) {

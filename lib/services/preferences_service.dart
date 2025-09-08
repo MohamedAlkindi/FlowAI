@@ -29,10 +29,17 @@ class PreferencesService {
     await prefs.setString(_preferencesKey, preferencesJson);
   }
 
+  static Future<void> setLocaleCode(String? localeCode) async {
+    final preferences = await getUserPreferences();
+    final updatedPreferences = preferences.copyWith(localeCode: localeCode);
+    await saveUserPreferences(updatedPreferences);
+  }
+
   static Future<void> updateAccessibilityStatus(bool isEnabled) async {
     final preferences = await getUserPreferences();
-    final updatedPreferences =
-        preferences.copyWith(isAccessibilityEnabled: isEnabled);
+    final updatedPreferences = preferences.copyWith(
+      isAccessibilityEnabled: isEnabled,
+    );
     await saveUserPreferences(updatedPreferences);
   }
 
@@ -43,7 +50,9 @@ class PreferencesService {
   }
 
   static Future<void> saveUserTriggers(
-      String? prefixTrigger, String? suffixTrigger) async {
+    String? prefixTrigger,
+    String? suffixTrigger,
+  ) async {
     final preferences = await getUserPreferences();
     final updatedTriggers = preferences.copyWith(
       triggerPrefix: prefixTrigger,
