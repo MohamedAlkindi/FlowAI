@@ -1,7 +1,9 @@
 import 'package:flow_ai/cubits/app_cubit.dart';
 import 'package:flow_ai/cubits/app_states.dart';
+import 'package:flow_ai/l10n/localizations/locale_callback.dart';
 import 'package:flow_ai/l10n/localizations/localizations_delegates.dart';
 import 'package:flow_ai/l10n/localizations/supported_locales.dart';
+import 'package:flow_ai/screens/dashboard/cubit/dashboard_cubit.dart';
 import 'package:flow_ai/screens/home_screen/cubit/home_screen_cubit.dart';
 import 'package:flow_ai/supabase_initialize.dart';
 import 'package:flow_ai/theme/theme_data.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AppCubit()),
         BlocProvider(create: (context) => HomeScreenCubit()),
+        BlocProvider(create: (context) => DashboardCubit()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
@@ -37,23 +40,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegates,
             supportedLocales: supportedLocales,
-            localeResolutionCallback: (deviceLocale, supported) {
-              // If a saved locale is set, use it (handled by locale property).
-              if (locale != null) return locale;
-
-              // No saved locale: decide from device locale.
-              final deviceCode = deviceLocale?.languageCode;
-              if (deviceCode == 'en' || deviceCode == 'ar') {
-                // Match device en/ar exactly from supported list
-                return supported.firstWhere(
-                  (l) => l.languageCode == deviceCode,
-                  orElse: () => const Locale('en'),
-                );
-              }
-
-              // Device language is neither en nor ar → fallback to English
-              return const Locale('en');
-            },
+            localeResolutionCallback: localeResolutionCallBack(locale),
             locale: locale,
             theme: ThemeData(
               primarySwatch: Colors.red,
