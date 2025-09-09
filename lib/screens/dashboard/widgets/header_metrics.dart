@@ -27,16 +27,16 @@ class HeaderMetrics extends StatelessWidget {
           runSpacing: 10,
           children: [
             MetricChip(
-              icon: Icons.shield,
-              label: AppLocalizations.of(context).t("daily_limit"),
-              value: '40000',
+              icon: Icons.calendar_month_rounded,
+              // label: AppLocalizations.of(context).t("daily_limit"),
+              value: '40000 ${AppLocalizations.of(context).t("per_day")}',
               color: Colors.cyanAccent,
               bg: const Color(0x3321D4FD),
             ),
             MetricChip(
               icon: Icons.timer,
-              label: AppLocalizations.of(context).t("last_minute"),
-              value: '4000',
+              // label: AppLocalizations.of(context).t("last_minute"),
+              value: '4000 ${AppLocalizations.of(context).t("per_minute")}',
               color: Colors.amberAccent,
               bg: const Color(0x33FFC107),
             ),

@@ -96,9 +96,11 @@
   "today":"اليوم",
   "minute":"الدقيقة",
   "trend":"مؤشر الاستخدامات",
-  "recent_activity":"الاستخدامات الأخيرة",
-  "last_request_date":"تاريخ آخر استخدام",
-  "last_request_time":"توقيت آخر استخدام",
+  "recent_activity":"حالة الاستخدامات الأخيرة",
+  "last_request_date":"التاريخ",
+  "last_request_time":"التوقيت",
   "usage_restrictions":"قيود الاستخدام",
-  "usage_data":"لا توجد مؤشرات استخدام حالياً"
+  "usage_data":"لا توجد مؤشرات استخدام حالياً",
+  "per_day":"طلب في اليوم",
+  "per_minute":"طلب في الدقيقة"
 }
