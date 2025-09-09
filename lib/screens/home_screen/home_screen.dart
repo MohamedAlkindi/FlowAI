@@ -13,6 +13,7 @@ import 'dart:ui';
 
 import '../../l10n/l10n.dart';
 import 'package:flow_ai/utils/overlay_dialog.dart';
+import 'package:flow_ai/screens/dashboard/dashboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,6 +48,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.data_thresholding_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              if (!mounted) return;
+              await Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const DashboardScreen()),
+              );
+            },
+            tooltip: t.t("usage_dashboard"),
+          ),
           // Settings button
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
@@ -72,10 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () async {
             homeScreenCubit.refreshStatus(context);
             if (context.mounted) {
-              showSnackBar(
-                t.t("status_refreshed"),
-                context: context,
-              );
+              showSnackBar(t.t("status_refreshed"), context: context);
             }
           },
           child: BlocBuilder<HomeScreenCubit, GotHomeScreenData>(

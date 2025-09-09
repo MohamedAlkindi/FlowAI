@@ -11,6 +11,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import com.example.flow_ai.FlowAccessibilityService
 import com.example.flow_ai.models.TriggerConfig
+import com.example.flow_ai.utils.DashboardStorage
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "flow_ai/platform"
@@ -48,6 +49,28 @@ class MainActivity: FlutterActivity() {
                 "requestOverlayPermission" -> {
                     requestOverlayPermission()
                     result.success(true)
+                }
+                "getDashboardUsage" -> {
+                    val json = DashboardStorage.getUsageJson(this)
+                    // Log.d("MainActivity", "getDashboardUsage called, returning: $json")
+                    result.success(json)
+                }
+                "getDashboardUsageHistory" -> {
+                    val jsonArr = DashboardStorage.getUsageHistoryJson(this)
+                    result.success(jsonArr)
+                }
+                "testSaveUsage" -> {
+                    // Test method to manually save usage data
+                    val testUsage = org.json.JSONObject().apply {
+                        put("request_count", 5)
+                        put("daily_limit", 40000)
+                        put("requests_last_minute", 2)
+                        put("per_minute_limit", 4000)
+                        put("last_request_date", "2024-01-15")
+                        put("last_request_minute", "2024-01-15T10:30:00.000Z")
+                    }
+                    DashboardStorage.saveUsage(this, testUsage)
+                    result.success("Test usage data saved")
                 }
                 else -> result.notImplemented()
             }

@@ -7,6 +7,7 @@ import com.example.flow_ai.BuildConfig
 import com.example.flow_ai.constants.ServiceConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.example.flow_ai.utils.DashboardStorage
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.OutputStreamWriter
@@ -81,6 +82,7 @@ class AIService(private val context: Context) {
         
         val accumulated = StringBuilder()
         var capturedErrorMessage: String? = null
+        var usageSaved = false
         
         reader.use { r ->
             var line: String?
@@ -90,6 +92,7 @@ class AIService(private val context: Context) {
                 
                 try {
                     val json = JSONObject(ln)
+                    Log.d(ServiceConstants.TAG, "Received JSON line: $ln")
                     when {
                         json.has("delta") -> {
                             val piece = json.optString("delta", "")
@@ -102,6 +105,20 @@ class AIService(private val context: Context) {
                             val finalText = json.optString("text", "")
                             accumulated.clear().append(finalText)
                             onDelta(accumulated.toString())
+                            
+                            // Check if this response also contains usage data
+                            if (json.has("usage")) {
+                                val usage = json.optJSONObject("usage")
+                                if (usage != null) {
+                                    Log.d(ServiceConstants.TAG, "Saving usage data: $usage")
+                                    DashboardStorage.saveUsage(context, usage)
+                                    usageSaved = true
+                                } else {
+                                    Log.w(ServiceConstants.TAG, "Usage field exists but is null")
+                                }
+                            } else {
+                                Log.d(ServiceConstants.TAG, "No usage field in response")
+                            }
                         }
                         json.has("error") -> {
                             val codeErr = json.optString("error", "")
@@ -118,12 +135,45 @@ class AIService(private val context: Context) {
                             onDelta(accumulated.toString())
                         }
                     }
-                } catch (_: Exception) {
+                } catch (e: Exception) {
                     // Plain text line, preserve newline
                     accumulated.append(ln).append('\n')
                     onDelta(accumulated.toString())
                 }
                 if (foundErrorThisLine) break
+            }
+        }
+        
+        // Final check: if we haven't saved usage data yet, try to parse the accumulated response
+        if (code in 200..299 && !usageSaved) {
+            try {
+                val finalResponse = accumulated.toString().trim()
+                if (finalResponse.isNotEmpty()) {
+                    // Try to find the last complete JSON object that contains usage data
+                    val jsonObjects = finalResponse.split("}{")
+                    for (i in jsonObjects.size - 1 downTo 0) {
+                        try {
+                            val jsonStr = if (i == 0) jsonObjects[i] else "{" + jsonObjects[i]
+                            if (i < jsonObjects.size - 1) {
+                                val jsonStr = jsonStr + "}"
+                            }
+                            val json = JSONObject(jsonStr)
+                            if (json.has("usage")) {
+                                val usage = json.optJSONObject("usage")
+                                if (usage != null) {
+                                    Log.d(ServiceConstants.TAG, "Saving usage data from final response: $usage")
+                                    DashboardStorage.saveUsage(context, usage)
+                                    break
+                                }
+                            }
+                        } catch (e: Exception) {
+                            // Continue to next JSON object
+                            continue
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(ServiceConstants.TAG, "Could not parse final response for usage data: $e")
             }
         }
         

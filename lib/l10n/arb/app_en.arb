@@ -87,5 +87,18 @@
   "choose_language_title": "Choose your language",
   "language_english": "English",
   "language_arabic": "العربية",
-  "settings_title":"Settings"
+  "settings_title":"Settings",
+  "usage_dashboard": "Usage Dashboard",
+  "today_summary":"Today Summary",
+  "requests":"Total Requests",
+  "daily_limit":"Daily Limit",
+  "last_minute":"Last Minute",
+  "today":"Today",
+  "minute":"Minute",
+  "trend":"Usage Trend",
+  "recent_activity":"Recent Activity",
+  "last_request_date":"Last Request Date",
+  "last_request_time":"Last Request Time",
+  "usage_restrictions":"Usage Restrictions",
+  "usage_data":"No trends available yet"
 }

@@ -79,7 +79,7 @@
   "customize_triggers":"حدّث التفعيلات",
   "grantPermission":"تفعيل الامكانية",
   "later":"ﻻحقاً",
-  "overlayDisplayPermissionTitle":"اذن العرض على تطفيقات أخرى 'اختياري'",
+  "overlayDisplayPermissionTitle":"اذن العرض على تطبيقات أخرى 'اختياري'",
   "overlayDisplayPermissionText":"يحتاج تطبيق FlowAI الى اذن للعرض فوق التطبيقات الأخرى حتى نتمكن من عرض ميزة 'فقاعة الذكاء الاصطناعي'من الظهور عند استخدام التطبيق.",
   "permissionGranted":"✓ تم تفعيل اذن الفقاعة",
   "grantBubblePermission":"اعطاء الاذن للفقاعة"
@@ -87,5 +87,18 @@
   "choose_language_title": "اختر لغتك",
   "language_english": "English",
   "language_arabic": "العربية",
-  "settings_title":"الاعدادات"
+  "settings_title":"الاعدادات",
+  "usage_dashboard": "لوحة معلومات الاستخدام",
+  "today_summary":"ملخص استخدامات اليوم",
+  "requests":"مجموع الاستخدامات",
+  "daily_limit":"الحد الأقصى لليوم",
+  "last_minute":"الحد الأقصى للدقيقة",
+  "today":"اليوم",
+  "minute":"الدقيقة",
+  "trend":"مؤشر الاستخدامات",
+  "recent_activity":"الاستخدامات الأخيرة",
+  "last_request_date":"تاريخ آخر استخدام",
+  "last_request_time":"توقيت آخر استخدام",
+  "usage_restrictions":"قيود الاستخدام",
+  "usage_data":"لا توجد مؤشرات استخدام حالياً"
 }
