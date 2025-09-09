@@ -96,7 +96,7 @@
   "today":"Today",
   "minute":"Minute",
   "trend":"Usage Trend",
-  "recent_activity":"Recent Activity Status",
+  "recent_activity":"Latest Activity Status",
   "last_request_date":"Date",
   "last_request_time":"Time",
   "usage_restrictions":"Usage Restrictions",

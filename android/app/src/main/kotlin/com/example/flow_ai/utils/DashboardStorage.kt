@@ -77,8 +77,8 @@ object DashboardStorage {
             }
             arr.put(obj)
         }
-        // Trim to last 21 entries
-        while (arr.length() > 21) {
+        // Trim to last 5 entries
+        while (arr.length() > 5) {
             // remove oldest (index 0)
             try {
                 val newArr = org.json.JSONArray()
