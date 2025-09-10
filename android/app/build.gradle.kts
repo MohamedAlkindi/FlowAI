@@ -82,15 +82,6 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    splits {
-        abi {
-            enable true            
-            reset()            
-            include 'armeabi-v7a','arm64-v8a','x86_64'            
-            universalApk false        
-        }    
-    }    
 }
 
 dependencies {
