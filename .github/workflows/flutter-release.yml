@@ -2,6 +2,9 @@ name: Build Flutter APK
 
 on:
   workflow_dispatch:
+  
+permissions:
+ contents: write
 
 jobs:
   build:
@@ -49,10 +52,30 @@ jobs:
       # 7️⃣ Build release APK
       - name: Build release APK
         run: flutter build apk --release --split-per-abi
+      
+      # 8.1️⃣ Rename APKs with version and ABI
+      - name: Rename APKs
+        run: |
+          VERSION=$(grep version: pubspec.yaml | head -1 | awk '{print $2}')
+          for file in android/app/build/outputs/flutter-apk/*.apk; do
+            ABI=$(echo "$file" | sed -E 's/.*app-([^-]+)-release\.apk/\1/')
+            mv "$file" "android/app/build/outputs/flutter-apk/FlowAI-${ABI}-v${VERSION}.apk"
+          done
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # 8️⃣ Upload APK artifacts
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
+      # 9️⃣ Publish to GitHub draft release
+      - name: Upload to GitHub Draft Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/*.apk
+          tag_name: v${{ env.VERSION }}
+          name: "FlowAI v${{ env.VERSION }}"
+          draft: true
+          files: android/app/build/outputs/flutter-apk/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # # 8️⃣ Upload APK artifacts
+      # - name: Upload release APK
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: release-apk
+      #     path: build/app/outputs/flutter-apk/*.apk
