@@ -58,11 +58,11 @@ jobs:
         run: |
           VERSION=$(grep version: pubspec.yaml | head -1 | awk '{print $2}')
           for file in android/app/build/outputs/flutter-apk/*.apk; do
-            ABI=$(echo "$file" | sed -E 's/.*app-([^-]+)-release\.apk/\1/')
-            mv "FlowAI-${ABI}-v${VERSION}.apk"
+            DIR=$(dirname "$file")
+            ABI=$(basename "$file" | sed -E 's/.*app-([^-]+)-release\.apk/\1/')
+            mv "$file" "$DIR/FlowAI-${ABI}-v${VERSION}.apk"
           done
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-
       # 9️⃣ Publish to GitHub draft release
       - name: Upload to GitHub Draft Release
         uses: softprops/action-gh-release@v1
