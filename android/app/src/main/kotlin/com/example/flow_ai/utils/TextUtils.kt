@@ -18,10 +18,23 @@ object TextUtils {
     
     fun replaceText(node: AccessibilityNodeInfo, newText: String) {
         try {
+            // For Android 11+, we need to be more careful with text replacement
             val args = Bundle().apply {
                 putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, newText)
             }
-            node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+            
+            // Try ACTION_SET_TEXT first
+            val result = node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+            if (!result) {
+                // Fallback: try to clear and set text
+                Log.d(ServiceConstants.TAG, "ACTION_SET_TEXT failed, trying fallback method")
+                node.performAction(AccessibilityNodeInfo.ACTION_CLEAR_SELECTION)
+                node.performAction(AccessibilityNodeInfo.ACTION_SET_SELECTION, Bundle().apply {
+                    putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_START_INT, 0)
+                    putInt(AccessibilityNodeInfo.ACTION_ARGUMENT_SELECTION_END_INT, node.text?.length ?: 0)
+                })
+                node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+            }
         } catch (e: Exception) {
             Log.e(ServiceConstants.TAG, "Error replacing text", e)
         }

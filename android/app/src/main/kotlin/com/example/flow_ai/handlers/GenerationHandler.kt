@@ -37,9 +37,9 @@ class GenerationHandler(
         
         val (prefixText, prompt, suffixText) = TextUtils.extractTextParts(fullText, span.start, span.end, aiTrigger, endTrigger)
 
-        // Store for callbacks
-        generationState.lastNode = source
-        generationState.originalSourceNode = source
+        // Store for callbacks - create copies to avoid recycling issues
+        generationState.lastNode = AccessibilityNodeInfo.obtain(source)
+        generationState.originalSourceNode = AccessibilityNodeInfo.obtain(source)
         generationState.lastPrefix = prefixText
         generationState.lastSuffix = suffixText
         generationState.lastPrompt = prompt
@@ -224,6 +224,11 @@ class GenerationHandler(
     fun cleanup() {
         serviceScope.cancel()
         overlayBubbleManager.removeAIBubble()
+        // Clean up stored nodes to prevent memory leaks
+        generationState.lastNode?.recycle()
+        generationState.originalSourceNode?.recycle()
+        generationState.lastNode = null
+        generationState.originalSourceNode = null
     }
 }
 

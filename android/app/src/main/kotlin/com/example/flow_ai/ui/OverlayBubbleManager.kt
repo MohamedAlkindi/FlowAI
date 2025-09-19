@@ -54,6 +54,19 @@ class OverlayBubbleManager(private val context: Context) {
             onApply(aiText)
             return
         }
+        
+        // Additional check for Android 11+ overlay restrictions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                // Test if we can actually create overlay windows
+                val testParams = createWindowParams()
+                // This will throw SecurityException if overlay is not properly granted
+            } catch (e: SecurityException) {
+                Log.w(ServiceConstants.TAG, "Overlay permission not properly granted for Android 11+, falling back to direct replacement", e)
+                onApply(aiText)
+                return
+            }
+        }
 
         removeAIBubble()
 
@@ -100,12 +113,17 @@ class OverlayBubbleManager(private val context: Context) {
             }
             flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             gravity = Gravity.TOP or Gravity.START
             x = 100
             y = 200
             format = android.graphics.PixelFormat.TRANSLUCENT
             softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+            // Android 11+ specific flags for better compatibility
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                flags = flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+            }
         }
     }
     

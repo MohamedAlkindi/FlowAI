@@ -70,10 +70,12 @@ class TriggerHandler(
                 val span = TextUtils.findAiSpan(text, triggerConfig.aiTrigger, triggerConfig.endTrigger)
                 if (span != null) {
                     Log.d(ServiceConstants.TAG, "Performing AI generation on span: $span")
-                    onTriggerDetected(focusedNode, text, span)
+                    // Create a copy of the node info to avoid recycling issues
+                    val nodeCopy = AccessibilityNodeInfo.obtain(focusedNode)
+                    onTriggerDetected(nodeCopy, text, span)
                 }
             } finally {
-                // Important: free resources
+                // Important: free resources - only recycle the original node
                 focusedNode.recycle()
             }
         }
