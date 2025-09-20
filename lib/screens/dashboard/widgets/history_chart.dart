@@ -27,6 +27,7 @@ class HistoryBarChart extends StatelessWidget {
               style: const TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w800,
+                color: Colors.white
               ),
             ),
             const SizedBox(height: 16),
@@ -35,7 +36,7 @@ class HistoryBarChart extends StatelessWidget {
                 AppLocalizations.of(context).t("usage_data"),
                 style: const TextStyle(
                   fontFamily: 'Poppins',
-                  color: Colors.white70,
+                  color: Colors.white,
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                 ),
@@ -65,6 +66,7 @@ class HistoryBarChart extends StatelessWidget {
             style: const TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w800,
+              color: Colors.white
             ),
           ),
           const SizedBox(height: 16),
@@ -88,6 +90,7 @@ class HistoryBarChart extends StatelessWidget {
                                   style: const TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w800,
+                                    color: Colors.white
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),

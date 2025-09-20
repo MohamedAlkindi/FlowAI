@@ -34,6 +34,7 @@ class MetricChip extends StatelessWidget {
             style: const TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w800,
+              color: Colors.white
             ),
           ),
         ],

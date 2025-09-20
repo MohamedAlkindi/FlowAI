@@ -37,6 +37,7 @@ class DashboardScreenState extends State<DashboardScreen>
             fontWeight: FontWeight.w800,
           ),
         ),
+        centerTitle: true,
       ),
       body: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {

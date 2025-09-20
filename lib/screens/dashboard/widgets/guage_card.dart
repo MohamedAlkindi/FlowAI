@@ -70,7 +70,7 @@ class AnimatedGaugeCardState extends State<AnimatedGaugeCard>
                 widget.title,
                 style: const TextStyle(
                   fontFamily: 'Poppins',
-                  color: Colors.white70,
+                  color: Colors.white,
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                 ),
@@ -97,6 +97,7 @@ class AnimatedGaugeCardState extends State<AnimatedGaugeCard>
                       style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w800,
+                        color: Colors.white
                       ),
                       textAlign: TextAlign.center,
                     ),
