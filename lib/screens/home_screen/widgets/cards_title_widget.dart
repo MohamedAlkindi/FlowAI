@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget cardTitleRow({required IconData icon, required String cardTitle}) {
   return Row(
@@ -13,10 +13,11 @@ Widget cardTitleRow({required IconData icon, required String cardTitle}) {
       Expanded(
         child: Text(
           cardTitle,
-          style: GoogleFonts.poppins(
-            fontSize: 20,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            fontSize: 16,
           ),
           softWrap: true,
         ),

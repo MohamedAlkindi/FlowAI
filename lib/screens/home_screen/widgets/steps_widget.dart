@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget buildStepsWidget(String number, String title, String description) {
   return Padding(
@@ -19,10 +19,9 @@ Widget buildStepsWidget(String number, String title, String description) {
             child: Center(
               child: Text(
                 number,
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
                   fontWeight: FontWeight.w800,
-                  color: Colors.white,
                 ),
               ),
             ),
@@ -35,7 +34,8 @@ Widget buildStepsWidget(String number, String title, String description) {
             children: [
               Text(
                 title,
-                style: GoogleFonts.poppins(
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -44,7 +44,7 @@ Widget buildStepsWidget(String number, String title, String description) {
               const SizedBox(height: 4),
               Text(
                 description,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[300],
                 ),

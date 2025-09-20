@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class MetricChip extends StatelessWidget {
   final IconData icon;
@@ -31,10 +31,9 @@ class MetricChip extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             value,
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
             ),
           ),
         ],

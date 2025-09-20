@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '../cubits/app_cubit.dart';
 import '../cubits/app_states.dart';
@@ -54,10 +54,9 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 10),
             Text(
               t.t('ai_tagline'),
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey[400],
-                letterSpacing: 0.5,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 50),

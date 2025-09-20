@@ -3,7 +3,7 @@ import 'package:flow_ai/cubits/app_states.dart';
 import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class LanguageSelection extends StatelessWidget {
   const LanguageSelection({super.key});
@@ -25,10 +25,9 @@ class LanguageSelection extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             t.t('choose_language_title'),
-            style: GoogleFonts.poppins(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
             ),
             textAlign: TextAlign.center,
           ),
@@ -52,9 +51,9 @@ class LanguageSelection extends StatelessWidget {
                     value: selected,
                     dropdownColor: const Color(0xFF22223A),
                     iconEnabledColor: Colors.white,
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 16,
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w800,
                     ),
                     items: [
                       DropdownMenuItem(

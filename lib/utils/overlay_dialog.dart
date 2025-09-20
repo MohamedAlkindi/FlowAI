@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import '../l10n/l10n.dart';
 
 class OverlayPermissionDialog extends StatelessWidget {
@@ -19,15 +19,15 @@ class OverlayPermissionDialog extends StatelessWidget {
       backgroundColor: const Color(0xFF16213E),
       title: Text(
         t.t("overlayDisplayPermissionTitle"),
-        style: GoogleFonts.poppins(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+        style: const TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w800,
           color: Colors.white,
         ),
       ),
       content: Text(
         t.t("overlayDisplayPermissionText"),
-        style: GoogleFonts.poppins(
+        style: const TextStyle(
           fontSize: 16,
           color: Colors.white,
         ),
@@ -37,9 +37,8 @@ class OverlayPermissionDialog extends StatelessWidget {
           onPressed: onDismiss,
           child: Text(
             t.t("later"),
-            style: GoogleFonts.poppins(
-              color: const Color(0xFFE94560),
-              fontSize: 16,
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
             ),
           ),
         ),
@@ -54,9 +53,9 @@ class OverlayPermissionDialog extends StatelessWidget {
           ),
           child: Text(
             t.t("grantPermission"),
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
             ),
           ),
         ),

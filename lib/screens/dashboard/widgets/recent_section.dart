@@ -2,7 +2,7 @@ import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/models/dashboard_usage.dart';
 import 'package:flow_ai/screens/dashboard/widgets/recent_section_row.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class RecentSection extends StatelessWidget {
   final DashboardUsage? usage;
@@ -16,10 +16,9 @@ class RecentSection extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context).t("recent_activity"),
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: 12),

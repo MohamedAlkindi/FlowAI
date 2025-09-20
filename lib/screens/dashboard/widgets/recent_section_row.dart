@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class RowValue extends StatelessWidget {
   final IconData icon;
@@ -25,7 +25,12 @@ class RowValue extends StatelessWidget {
 
             Text(
               label,
-              style: GoogleFonts.poppins(color: Colors.white70, fontSize: 12),
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                color: Colors.white70,
+                fontWeight: FontWeight.w800,
+                fontSize: 12,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ],
@@ -33,7 +38,12 @@ class RowValue extends StatelessWidget {
         Flexible(
           child: Text(
             value,
-            style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+            ),
             textAlign: TextAlign.end,
             overflow: TextOverflow.ellipsis,
           ),

@@ -8,7 +8,7 @@ import 'package:flow_ai/screens/home_screen/widgets/troubleshooting_card.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'dart:ui';
 
 import '../../l10n/l10n.dart';
@@ -41,10 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         title: Text(
           t.t('app_title'),
-          style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
           ),
         ),
         actions: [

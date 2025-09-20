@@ -3,7 +3,7 @@ import 'package:flow_ai/utils/accessibility_utils.dart';
 import 'package:flow_ai/utils/friendly_error.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget buildStatusCard({
   required AppLocalizations t,
@@ -39,18 +39,20 @@ Widget buildStatusCard({
           isAccessibilityEnabled
               ? t.t('status_active')
               : t.t('status_inactive'),
-          style: GoogleFonts.poppins(
-            fontSize: 20, // Increased for better hierarchy
-            fontWeight: FontWeight.bold,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
             color: Colors.white,
+            fontSize: 18
           ),
         ),
         const SizedBox(height: 6), // Reduced from 8
         Text(
           isAccessibilityEnabled ? t.t('status_ready') : t.t('status_enable'),
-          style: GoogleFonts.poppins(
+          style: const TextStyle(
             fontSize: 14,
-            color: Colors.grey[300], // Slightly lighter for better contrast
+            color: Color(0xFFD6D6D6), // Approximate Colors.grey[300]
+            fontWeight: FontWeight.w800,
           ),
           textAlign: TextAlign.center,
         ),
@@ -92,9 +94,9 @@ Widget buildStatusCard({
               isAccessibilityEnabled
                   ? t.t('manage_in_settings')
                   : t.t('enable_service'),
-              style: GoogleFonts.poppins(
-                fontSize: 15, // Slightly reduced for button
-                fontWeight: FontWeight.w600,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
             ),
           ),
@@ -119,9 +121,9 @@ Widget buildStatusCard({
                 hasOverlayPermission
                     ? t.t("permissionGranted")
                     : t.t("grantBubblePermission"),
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),

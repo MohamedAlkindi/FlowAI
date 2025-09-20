@@ -7,7 +7,7 @@ import 'package:flow_ai/screens/dashboard/widgets/history_chart.dart';
 import 'package:flow_ai/screens/dashboard/widgets/recent_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -32,10 +32,9 @@ class DashboardScreenState extends State<DashboardScreen>
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context).t("usage_dashboard"),
-          style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),

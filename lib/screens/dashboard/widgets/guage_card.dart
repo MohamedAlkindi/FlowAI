@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AnimatedGaugeCard extends StatefulWidget {
   final String title;
@@ -69,7 +68,12 @@ class AnimatedGaugeCardState extends State<AnimatedGaugeCard>
             children: [
               Text(
                 widget.title,
-                style: GoogleFonts.poppins(color: Colors.white70, fontSize: 14),
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
@@ -90,10 +94,9 @@ class AnimatedGaugeCardState extends State<AnimatedGaugeCard>
                     ),
                     Text(
                       '${widget.value.toInt()}${widget.caption}',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w800,
                       ),
                       textAlign: TextAlign.center,
                     ),

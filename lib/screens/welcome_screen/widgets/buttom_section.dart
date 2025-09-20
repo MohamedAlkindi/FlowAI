@@ -3,7 +3,7 @@ import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget buildBottomSection({
   required AppLocalizations t,
@@ -58,9 +58,9 @@ Widget buildBottomSection({
             ),
             child: Text(
               currentPage < length - 1 ? t.t('next') : t.t('get_started'),
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
             ),
           ),
@@ -71,7 +71,8 @@ Widget buildBottomSection({
             onPressed: () => completeOnboarding(context),
             child: Text(
               t.t('skip'),
-              style: GoogleFonts.poppins(
+              style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 14,
                 color: Colors.grey[400],
               ),

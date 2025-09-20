@@ -2,7 +2,7 @@ import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/models/dashboard_usage.dart';
 import 'package:flow_ai/screens/dashboard/widgets/metric_chip.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class HeaderMetrics extends StatelessWidget {
   final DashboardUsage? usage;
@@ -15,10 +15,9 @@ class HeaderMetrics extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context).t("usage_restrictions"),
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: 12),

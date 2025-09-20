@@ -1,7 +1,7 @@
 import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/screens/dashboard/widgets/history_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class HistoryBarChart extends StatelessWidget {
   final List<Map<String, dynamic>>
@@ -24,17 +24,21 @@ class HistoryBarChart extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context).t("trend"),
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 16),
             Center(
               child: Text(
                 AppLocalizations.of(context).t("usage_data"),
-                style: GoogleFonts.poppins(color: Colors.white70, fontSize: 14),
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
               ),
             ),
           ],
@@ -58,10 +62,9 @@ class HistoryBarChart extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context).t("trend"),
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
             ),
           ),
           const SizedBox(height: 16),
@@ -82,10 +85,9 @@ class HistoryBarChart extends StatelessWidget {
                                 width: width * 0.25,
                                 child: Text(
                                   formatDate(item['date'] as String),
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                  style: const TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),

@@ -2,7 +2,7 @@ import 'package:flow_ai/l10n/l10n.dart';
 import 'package:flow_ai/screens/home_screen/widgets/cards_title_widget.dart';
 import 'package:flow_ai/screens/home_screen/widgets/steps_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget buildOemInstructionsCard({
   required AppLocalizations t,
@@ -45,9 +45,9 @@ Widget buildOemInstructionsCard({
           const SizedBox(height: 8),
           Text(
             t.t('oem_unknown_hint'),
-            style: GoogleFonts.poppins(
-              fontSize: 13,
-              color: Colors.grey[300],
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
             ),
           ),
         ],

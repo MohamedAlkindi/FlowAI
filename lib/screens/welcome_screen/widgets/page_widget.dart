@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Widget buildPage({required Map<String, String> page}) {
   return Padding(
@@ -16,20 +16,18 @@ Widget buildPage({required Map<String, String> page}) {
             const SizedBox(height: 40),
             Text(
               page['title']!,
-              style: GoogleFonts.poppins(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             Text(
               page['subtitle']!,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey[400],
-                height: 1.5,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
               ),
               textAlign: TextAlign.center,
             ),
