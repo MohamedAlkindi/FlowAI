@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 import '../cubits/app_cubit.dart';
 import '../cubits/app_states.dart';
 import '../l10n/l10n.dart';
@@ -28,12 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 600));
     if (!mounted) return;
     final state = cubit.state;
-    final showWelcome =
-        state is AppLoaded ? state.preferences.isFirstLaunch : true;
+    final showWelcome = state is AppLoaded
+        ? state.preferences.isFirstLaunch
+        : true;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-          builder: (_) =>
-              showWelcome ? const WelcomeScreen() : const HomeScreen()),
+        builder: (_) =>
+            showWelcome ? const WelcomeScreen() : const HomeScreen(),
+      ),
     );
   }
 
@@ -51,12 +52,13 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 120,
               height: 120,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             Text(
               t.t('ai_tagline'),
               style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,
               ),
             ),
             const SizedBox(height: 50),
