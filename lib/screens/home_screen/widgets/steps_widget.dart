@@ -18,7 +18,10 @@ Widget buildStepsWidget(String number, String title, String description) {
             child: Center(
               child: Text(
                 number,
-                style: const TextStyle(fontWeight: FontWeight.w700),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
