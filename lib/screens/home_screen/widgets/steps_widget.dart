@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 Widget buildStepsWidget(String number, String title, String description) {
   return Padding(
     padding: const EdgeInsets.only(left: 5, bottom: 20, top: 15),
@@ -19,10 +18,7 @@ Widget buildStepsWidget(String number, String title, String description) {
             child: Center(
               child: Text(
                 number,
-                style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w800,
-                ),
+                style: const TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
           ),
@@ -47,6 +43,7 @@ Widget buildStepsWidget(String number, String title, String description) {
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[300],
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

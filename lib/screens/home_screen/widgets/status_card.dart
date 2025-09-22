@@ -4,7 +4,6 @@ import 'package:flow_ai/utils/friendly_error.dart';
 import 'package:flow_ai/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 
-
 Widget buildStatusCard({
   required AppLocalizations t,
   required bool isAccessibilityEnabled,
@@ -43,7 +42,7 @@ Widget buildStatusCard({
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w800,
             color: Colors.white,
-            fontSize: 18
+            fontSize: 18,
           ),
         ),
         const SizedBox(height: 6), // Reduced from 8
@@ -64,18 +63,11 @@ Widget buildStatusCard({
               try {
                 await AccessibilityUtils.openAccessibilitySettings();
                 if (context.mounted) {
-                  showSnackBar(
-                    t.t('open_settings'),
-                    context: context,
-                  );
+                  showSnackBar(t.t('open_settings'), context: context);
                 }
               } catch (e) {
                 if (context.mounted) {
-                  showSnackBar(
-                    friendlyError(e),
-                    error: true,
-                    context: context,
-                  );
+                  showSnackBar(friendlyError(e), error: true, context: context);
                 }
               }
             },
@@ -87,8 +79,9 @@ Widget buildStatusCard({
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12), // Reduced from 16
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+              ), // Reduced from 16
             ),
             child: Text(
               isAccessibilityEnabled

@@ -99,8 +99,8 @@
   "recent_activity":"حالة الاستخدام الأخير",
   "last_request_date":"التاريخ",
   "last_request_time":"التوقيت",
-  "usage_restrictions":"قيود الاستخدام",
+  "usage_restrictions":"قيود الطلبات",
   "usage_data":"لا توجد مؤشرات استخدام حالياً",
-  "per_day":"طلب في اليوم",
-  "per_minute":"طلب في الدقيقة"
+  "per_day":"في اليوم",
+  "per_minute":"في الدقيقة"
 }

@@ -3,12 +3,12 @@ import 'package:flow_ai/screens/home_screen/widgets/cards_title_widget.dart';
 import 'package:flow_ai/screens/home_screen/widgets/steps_widget.dart';
 import 'package:flutter/material.dart';
 
-
 Widget buildOemInstructionsCard({
   required AppLocalizations t,
   required String? oemBrand,
 }) {
-  final isXiaomi = (oemBrand ?? '').contains('xiaomi') ||
+  final isXiaomi =
+      (oemBrand ?? '').contains('xiaomi') ||
       (oemBrand ?? '').contains('redmi') ||
       (oemBrand ?? '').contains('mi');
   final isSamsung = (oemBrand ?? '').contains('samsung');
@@ -68,10 +68,19 @@ Iterable<Widget> showXiaomiInstructions({required AppLocalizations t}) {
 Iterable<Widget> showSamsungInstructions({required AppLocalizations t}) {
   return [
     buildStepsWidget(
-        t.t('1'), t.t('samsung_step_1_t'), t.t('samsung_step_1_d')),
+      t.t('1'),
+      t.t('samsung_step_1_t'),
+      t.t('samsung_step_1_d'),
+    ),
     buildStepsWidget(
-        t.t('2'), t.t('samsung_step_2_t'), t.t('samsung_step_2_d')),
+      t.t('2'),
+      t.t('samsung_step_2_t'),
+      t.t('samsung_step_2_d'),
+    ),
     buildStepsWidget(
-        t.t('3'), t.t('samsung_step_3_t'), t.t('samsung_step_3_d')),
+      t.t('3'),
+      t.t('samsung_step_3_t'),
+      t.t('samsung_step_3_d'),
+    ),
   ];
 }

@@ -99,8 +99,8 @@
   "recent_activity":"Latest Activity Status",
   "last_request_date":"Date",
   "last_request_time":"Time",
-  "usage_restrictions":"Usage Restrictions",
+  "usage_restrictions":"Requests Restrictions",
   "usage_data":"No trends available yet",
-  "per_day":"requests per day",
-  "per_minute":"requests per minute"
+  "per_day":"per day",
+  "per_minute":"per minute"
 }

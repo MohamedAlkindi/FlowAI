@@ -27,7 +27,7 @@ class RowValue extends StatelessWidget {
               label,
               style: const TextStyle(
                 fontFamily: 'Poppins',
-                color: Colors.white70,
+                color: Colors.white,
                 fontWeight: FontWeight.w800,
                 fontSize: 12,
               ),
@@ -39,7 +39,6 @@ class RowValue extends StatelessWidget {
           child: Text(
             value,
             style: const TextStyle(
-              fontFamily: 'Poppins',
               color: Colors.white,
               fontWeight: FontWeight.w800,
               fontSize: 12,

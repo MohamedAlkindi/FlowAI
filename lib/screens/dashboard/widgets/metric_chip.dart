@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MetricChip extends StatelessWidget {
   final IconData icon;
   final String value;
@@ -29,12 +28,15 @@ class MetricChip extends StatelessWidget {
         children: [
           Icon(icon, color: color, size: 16),
           const SizedBox(width: 6),
-          Text(
-            value,
-            style: const TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w800,
-              color: Colors.white
+          Flexible(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
             ),
           ),
         ],

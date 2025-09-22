@@ -3,7 +3,6 @@ import 'package:flow_ai/models/dashboard_usage.dart';
 import 'package:flow_ai/screens/dashboard/widgets/metric_chip.dart';
 import 'package:flutter/material.dart';
 
-
 class HeaderMetrics extends StatelessWidget {
   final DashboardUsage? usage;
   const HeaderMetrics({super.key, required this.usage});
@@ -18,7 +17,7 @@ class HeaderMetrics extends StatelessWidget {
           style: const TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w800,
-            color: Colors.white
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -28,14 +27,12 @@ class HeaderMetrics extends StatelessWidget {
           children: [
             MetricChip(
               icon: Icons.calendar_month_rounded,
-              // label: AppLocalizations.of(context).t("daily_limit"),
               value: '40000 ${AppLocalizations.of(context).t("per_day")}',
               color: Colors.cyanAccent,
               bg: const Color(0x3321D4FD),
             ),
             MetricChip(
               icon: Icons.timer,
-              // label: AppLocalizations.of(context).t("last_minute"),
               value: '4000 ${AppLocalizations.of(context).t("per_minute")}',
               color: Colors.amberAccent,
               bg: const Color(0x33FFC107),
