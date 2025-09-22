@@ -14,6 +14,7 @@ import com.example.flow_ai.models.TextSpan
 import com.example.flow_ai.models.TriggerConfig
 import com.example.flow_ai.services.AIService
 import com.example.flow_ai.ui.OverlayBubbleManager
+import com.example.flow_ai.MainActivity
 
 class FlowAccessibilityService : AccessibilityService() {
     
@@ -67,6 +68,7 @@ class FlowAccessibilityService : AccessibilityService() {
             notificationTimeout = 50
         }
         serviceInfo = info
+        MainActivity.sendAccessibilityStatus(true)
     }
     
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
@@ -88,6 +90,7 @@ class FlowAccessibilityService : AccessibilityService() {
         Log.d(ServiceConstants.TAG, "FlowAccessibilityService onDestroy")
         generationHandler.cleanup()
         instance = null
+        MainActivity.sendAccessibilityStatus(false)
     }
 }
 

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flow_ai/cubits/app_cubit.dart';
@@ -13,25 +14,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenCubit extends Cubit<GotHomeScreenData> {
   HomeScreenCubit()
-      : super(GotHomeScreenData(
+    : super(
+        GotHomeScreenData(
           isAccessibilityEnabled: false,
           oemBrand: '',
           hasOverlayPermission: false,
           showOverlayDialog: false,
-        ));
+        ),
+      );
   String? prefixTrigger;
   String? suffixTrigger;
 
   static const MethodChannel _channel = MethodChannel('flow_ai/platform');
+  static const EventChannel _accessibilityEventChannel = EventChannel(
+    'flow_ai/accessibility_status',
+  );
+  static const EventChannel _overlayEventChannel = EventChannel(
+    'flow_ai/overlay_status',
+  );
+
+  StreamSubscription? _accessibilitySub;
+  StreamSubscription? _overlaySub;
 
   Future<void> checkOverlayPermission(BuildContext context) async {
     try {
       final hasPermission =
           await _channel.invokeMethod('checkOverlayPermission') ?? false;
-      emit(state.copyWith(
-        hasOverlayPermission: hasPermission,
-        showOverlayDialog: !hasPermission,
-      ));
+      emit(
+        state.copyWith(
+          hasOverlayPermission: hasPermission,
+          showOverlayDialog: !hasPermission,
+        ),
+      );
     } catch (_) {}
   }
 
@@ -56,9 +70,7 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
     if (context.mounted) {
       checkOverlayPermission(context);
     }
-    emit(
-      state.copyWith(isAccessibilityEnabled: isAccessibilityEnabled),
-    );
+    emit(state.copyWith(isAccessibilityEnabled: isAccessibilityEnabled));
   }
 
   Future<void> loadOemBrand() async {
@@ -69,7 +81,8 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
         final brand = (info.brand).toLowerCase();
         emit(
           state.copyWith(
-              oemBrand: manufacturer.isNotEmpty ? manufacturer : brand),
+            oemBrand: manufacturer.isNotEmpty ? manufacturer : brand,
+          ),
         );
       }
     } catch (_) {}
@@ -94,8 +107,33 @@ class HomeScreenCubit extends Cubit<GotHomeScreenData> {
   Future<void> initMethods(BuildContext context) async {
     await getTriggers(context);
     if (context.mounted) {
+      _listenToNativeStatus(context);
       await refreshStatus(context);
     }
     await loadOemBrand();
+  }
+
+  void _listenToNativeStatus(BuildContext context) {
+    _accessibilitySub?.cancel();
+    _overlaySub?.cancel();
+    _accessibilitySub = _accessibilityEventChannel
+        .receiveBroadcastStream()
+        .listen((event) {
+          if (event is bool) {
+            emit(state.copyWith(isAccessibilityEnabled: event));
+          }
+        });
+    _overlaySub = _overlayEventChannel.receiveBroadcastStream().listen((event) {
+      if (event is bool) {
+        emit(state.copyWith(hasOverlayPermission: event));
+      }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _accessibilitySub?.cancel();
+    _overlaySub?.cancel();
+    return super.close();
   }
 }

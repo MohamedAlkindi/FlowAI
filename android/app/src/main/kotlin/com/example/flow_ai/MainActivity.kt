@@ -12,9 +12,17 @@ import io.flutter.plugin.common.MethodChannel
 import com.example.flow_ai.FlowAccessibilityService
 import com.example.flow_ai.models.TriggerConfig
 import com.example.flow_ai.utils.DashboardStorage
+import io.flutter.plugin.common.EventChannel
+import android.os.Handler
+import android.os.Looper
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "flow_ai/platform"
+    private val ACCESSIBILITY_EVENT_CHANNEL = "flow_ai/accessibility_status"
+    private val OVERLAY_EVENT_CHANNEL = "flow_ai/overlay_status"
+
+    private var accessibilityEventSink: EventChannel.EventSink? = null
+    private var overlayEventSink: EventChannel.EventSink? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -75,6 +83,36 @@ class MainActivity: FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+
+        // Accessibility status event channel
+        EventChannel(flutterEngine.dartExecutor.binaryMessenger, ACCESSIBILITY_EVENT_CHANNEL).setStreamHandler(
+            object : EventChannel.StreamHandler {
+                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    accessibilityEventSink = events
+                }
+                override fun onCancel(arguments: Any?) {
+                    accessibilityEventSink = null
+                }
+            }
+        )
+        // Overlay/bubble status event channel
+        EventChannel(flutterEngine.dartExecutor.binaryMessenger, OVERLAY_EVENT_CHANNEL).setStreamHandler(
+            object : EventChannel.StreamHandler {
+                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    overlayEventSink = events
+                    // Send current overlay status immediately
+                    val hasPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        Settings.canDrawOverlays(this@MainActivity)
+                    } else {
+                        true
+                    }
+                    events?.success(hasPermission)
+                }
+                override fun onCancel(arguments: Any?) {
+                    overlayEventSink = null
+                }
+            }
+        )
     }
 
     private fun openAccessibilitySettings() {
@@ -88,6 +126,11 @@ class MainActivity: FlutterActivity() {
                 Uri.parse("package:$packageName")
             )
             startActivity(intent)
+            // After requesting, check and send status (may need to be improved for async grant)
+            Handler(Looper.getMainLooper()).postDelayed({
+                val hasPermission = Settings.canDrawOverlays(this)
+                sendOverlayStatus(hasPermission)
+            }, 1000)
         }
     }
 
@@ -106,5 +149,30 @@ class MainActivity: FlutterActivity() {
         }
         val accessibilityEnabled = Settings.Secure.getInt(context.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, 0)
         return accessibilityEnabled == 1
+    }
+
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainActivityInstance = this
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val hasPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Settings.canDrawOverlays(this)
+        } else {
+            true
+        }
+        sendOverlayStatus(hasPermission)
+    }
+
+    companion object {
+        var mainActivityInstance: MainActivity? = null
+        fun sendAccessibilityStatus(enabled: Boolean) {
+            mainActivityInstance?.accessibilityEventSink?.success(enabled)
+        }
+        fun sendOverlayStatus(enabled: Boolean) {
+            mainActivityInstance?.overlayEventSink?.success(enabled)
+        }
     }
 }
