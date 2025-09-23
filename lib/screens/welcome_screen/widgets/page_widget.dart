@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 Widget buildPage({required Map<String, String> page}) {
   return Padding(
     padding: const EdgeInsets.all(40.0),
@@ -16,19 +15,13 @@ Widget buildPage({required Map<String, String> page}) {
             const SizedBox(height: 40),
             Text(
               page['title']!,
-              style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w800,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.w800),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             Text(
               page['subtitle']!,
-              style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w800,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.w800),
               textAlign: TextAlign.center,
             ),
           ],
