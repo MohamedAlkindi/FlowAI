@@ -51,7 +51,8 @@ jobs:
 
       # 7️⃣ Build release APK
       - name: Build release APK
-        run: flutter build apk --release --split-per-abi
+        run: flutter build apk --release --target-platform android-arm64
+        # run: flutter build apk --release --split-per-abi
       
       # # 8.1️⃣ Rename APKs with version and ABI
       # - name: Rename APKs
