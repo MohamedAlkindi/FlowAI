@@ -55,7 +55,7 @@ class HistoryBar extends StatelessWidget {
                     color: barColor,
                     boxShadow: [
                       BoxShadow(
-                        color: barColor.withOpacity(0.3),
+                        color: barColor.withAlpha((0.3 * 255).toInt()),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
